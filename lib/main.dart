@@ -1,59 +1,29 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
-import 'package:sup/components/LoadingCircle.dart';
-import 'package:sup/screens/Home.dart';
-import 'package:sup/screens/Login.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fiveminutejournal/provider/auth_provider.dart';
+import 'package:fiveminutejournal/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import './services/auth.dart';
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final FirebaseApp app = await FirebaseApp.configure(
+    name: 'june_lake',
+    options: const FirebaseOptions(
+      googleAppID: '1:146954790551:ios:d932da53cebf8c9c27ebd2',
+      // gcmSenderID: '79601577497',
+      apiKey: 'AIzaSyBXfc3LkLyg787g7AGAn5GWNb9e_-6mMiU',
+      projectID: 'sup-f0bc0',
+    ),
+  );
+  Firestore(app: app);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
-
-  @override
-  Widget build(BuildContext context) {
-    print("drawing Main Page");
-
-    FirebaseAnalytics analytics = FirebaseAnalytics();
-
-    analytics.setCurrentScreen(screenName: "Main Screen").then((v) => {});
-
-    return MultiProvider(
-      providers: [
-        Provider<FirebaseAnalytics>.value(value: analytics),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.pink,
-        ),
-        navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: analytics),
-        ],
-        initialRoute: "/",
-        home: FutureBuilder<FirebaseUser>(
-            future: AuthService().getUser,
-            builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                print("drawing main: target screen" +
-                    snapshot.connectionState.toString());
-                final bool loggedIn = snapshot.hasData;
-                return loggedIn ? HomePage() : LoginPage();
-              } else {
-                print("drawing main: loading circle" +
-                    snapshot.connectionState.toString());
-                return LoadingCircle();
-              }
-            }),
-      ),
-    );
-  }
+  runApp(ChangeNotifierProvider<ThemeProvider>(
+    child: AuthProvider(),
+    create: (BuildContext context) {
+      return ThemeProvider(prefs);
+    },
+  ));
 }
