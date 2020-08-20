@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fiveminutejournal/api/log_service.dart';
-import 'package:fiveminutejournal/model/log.dart';
+import 'package:sup/api/log_service.dart';
+import 'package:sup/model/log.dart';
 import 'package:provider/provider.dart';
 
 class LogProvider extends StatelessWidget {

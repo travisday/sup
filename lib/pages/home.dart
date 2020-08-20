@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:fiveminutejournal/api/log_service.dart';
-import 'package:fiveminutejournal/model/log.dart';
-import 'package:fiveminutejournal/widgets/text_item.dart';
+import 'package:english_words/english_words.dart';
+import 'package:sup/api/log_service.dart';
+import 'package:sup/model/log.dart';
+import 'package:sup/widgets/text_item.dart';
 import 'package:provider/provider.dart';
+import 'package:sup/pages/profile.dart';
 
-import 'package:fiveminutejournal/provider/theme_provider.dart';
+import 'package:sup/provider/theme_provider.dart';
 
 var firstPageItems = [
   {
@@ -146,65 +148,116 @@ var firstPageItem = firstPageItems[Random().nextInt(firstPageItems.length)];
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Logs(
-        firstPageItem: firstPageItem,
-      ),
-    );
+    return Scaffold(body: RandomWords());
   }
 }
 
-class Logs extends StatelessWidget {
-  final firstPageItem;
+class RandomWords extends StatefulWidget {
+  @override
+  _RandomWordsState createState() => _RandomWordsState();
+}
 
-  Logs({Key key, this.firstPageItem}) : super(key: key);
+class _RandomWordsState extends State<RandomWords> {
+  final _suggestions = <WordPair>[];
+  final _saved = Set<WordPair>();
+  final _biggerFont = TextStyle(fontSize: 18.0);
 
   @override
   Widget build(BuildContext context) {
-    var entries = Provider.of<List<Log>>(context);
+    return Container(
+      child: _buildSuggestions(),
+    );
+  }
 
-    if (entries == null) return Text('loading...');
+  Widget _buildSuggestions() {
+    return ListView.builder(
+        padding: EdgeInsets.all(16.0),
+        itemBuilder: /*1*/ (context, i) {
+          if (i.isOdd) return Divider(); /*2*/
 
-    return PageView.builder(
-        itemCount: entries.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildFirstPage(context, entries);
+          final index = i ~/ 2; /*3*/
+          if (index >= _suggestions.length) {
+            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
+          }
+          return _buildRow(_suggestions[index]);
         });
   }
 
-  Widget _buildFirstPage(BuildContext context, List<Log> entries) {
-    var isDark =
-        Provider.of<ThemeProvider>(context).currentTheme == MyThemes.dark;
-    var assetsPath =
-        'assets/img/${isDark ? "open-doodles-dark" : "open-doodles"}/png/';
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        new Image(
-            width: 400.0,
-            // height: 400.0,
-            fit: BoxFit.contain,
-            image: new AssetImage(assetsPath + firstPageItem["asset"])),
-        Container(
-          padding: EdgeInsets.fromLTRB(24, 24, 24, 144),
-          child: Text(
-            firstPageItem["text"],
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Theme.of(context).textTheme.caption.color,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-        ),
-        if (entries.length > 0)
-          Text(
-            "(swipe for past entries) >",
-            style: TextStyle(
-              color: Theme.of(context).textTheme.caption.color,
-              fontStyle: FontStyle.italic,
-            ),
-          )
-      ],
+  Widget _buildRow(WordPair pair) {
+    final alreadySaved = _saved.contains(pair);
+    return ListTile(
+      title: Text(
+        pair.asPascalCase,
+        style: _biggerFont,
+      ),
+      trailing: Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.pink : null,
+      ),
+      onTap: () {
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
+        });
+      },
     );
   }
 }
+
+// class Logs extends StatelessWidget {
+//   final firstPageItem;
+
+//   Logs({Key key, this.firstPageItem}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     var entries = Provider.of<List<Log>>(context);
+
+//     if (entries == null) return Text('loading...');
+
+//     return PageView.builder(
+//         itemCount: entries.length + 1,
+//         itemBuilder: (BuildContext context, int index) {
+//           return _buildFirstPage(context, entries);
+//         });
+//   }
+
+//   Widget _buildFirstPage(BuildContext context, List<Log> entries) {
+//     var isDark =
+//         Provider.of<ThemeProvider>(context).currentTheme == MyThemes.dark;
+//     var assetsPath =
+//         'assets/img/${isDark ? "open-doodles-dark" : "open-doodles"}/png/';
+//     return Column(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: <Widget>[
+//         new Image(
+//             width: 400.0,
+//             // height: 400.0,
+//             fit: BoxFit.contain,
+//             image: new AssetImage(assetsPath + firstPageItem["asset"])),
+//         Container(
+//           padding: EdgeInsets.fromLTRB(24, 24, 24, 144),
+//           child: Text(
+//             firstPageItem["text"],
+//             textAlign: TextAlign.center,
+//             style: TextStyle(
+//               color: Theme.of(context).textTheme.caption.color,
+//               fontStyle: FontStyle.italic,
+//             ),
+//           ),
+//         ),
+//         if (entries.length > 0)
+//           Text(
+//             "(swipe for past entries) >",
+//             style: TextStyle(
+//               color: Theme.of(context).textTheme.caption.color,
+//               fontStyle: FontStyle.italic,
+//             ),
+//           )
+//       ],
+//     );
+//   }
+// }

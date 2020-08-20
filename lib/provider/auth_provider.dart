@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fiveminutejournal/api/auth.dart';
-import 'package:fiveminutejournal/pages/my_app.dart';
+import 'package:sup/api/auth.dart';
+import 'package:sup/pages/my_app.dart';
 import 'package:provider/provider.dart';
 
 class AuthProvider extends StatelessWidget {

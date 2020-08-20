@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fiveminutejournal/api/auth.dart';
-import 'package:fiveminutejournal/model/log.dart';
+import 'package:sup/api/auth.dart';
+import 'package:sup/model/log.dart';
 
 class LogService {
   final Firestore _db;

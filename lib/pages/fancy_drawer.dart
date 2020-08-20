@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
-import 'package:fiveminutejournal/pages/profile.dart';
-import 'package:fiveminutejournal/pages/tabs.dart';
+import 'package:sup/pages/profile.dart';
+import 'package:sup/pages/home.dart';
+import 'package:sup/pages/tabs.dart';
+import 'package:sup/pages/bar.dart';
 
 class FancyDrawer extends StatefulWidget {
   FancyDrawer({Key key}) : super(key: key);
@@ -84,8 +86,7 @@ class _FancyDrawerState extends State<FancyDrawer> {
         color: Theme.of(context).canvasColor,
         child: SafeArea(
           bottom: false,
-          child: TabNavigator(
-              onDrawerTap: () => _innerDrawerKey.currentState.toggle()),
+          child: Bar(onDrawerTap: () => _innerDrawerKey.currentState.toggle()),
         ),
       ),
     );

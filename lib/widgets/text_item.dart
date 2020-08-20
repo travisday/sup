@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fiveminutejournal/model/log.dart';
+import 'package:sup/model/log.dart';
 import 'package:menu/menu.dart';
 import 'package:share/share.dart';
 
