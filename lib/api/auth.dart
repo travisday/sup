@@ -65,9 +65,17 @@ class AuthService {
       email: email,
       password: password,
     );
-    var info = UserUpdateInfo();
-    info.displayName = displayName;
-    await res.user.updateProfile(info);
+    var u = res.user;
+    DocumentReference ref =
+        Firestore.instance.collection('users').document(u.uid);
+    DocumentSnapshot snap = await ref.get();
+    await ref.setData({'name': displayName}, merge: true);
+    snap = await ref.get();
+
+    User user = User.fromFirestore(snap);
+    status.add(LoggedIn(user));
+
+    print(user);
     return res;
   }
 

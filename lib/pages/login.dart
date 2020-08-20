@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sup/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sup/api/auth.dart';
@@ -519,7 +521,7 @@ class _LoginPageState extends State<LoginPage>
       return;
     }
 
-    print('Creating user for $name with $email:$password');
+    print('Creating user for $name with $email');
     try {
       AuthResult res = await auth.signUp(
         email: email,

@@ -1,16 +1,16 @@
+import 'package:sup/model/user.dart';
 import 'package:flutter/material.dart';
-import 'package:sup/api/log_service.dart';
-import 'package:sup/model/log.dart';
+import 'package:sup/api/user_service.dart';
 import 'package:provider/provider.dart';
 
-class LogProvider extends StatelessWidget {
+class FriendProvider extends StatelessWidget {
   final Widget child;
-  LogProvider({this.child});
+  FriendProvider({this.child});
 
   @override
   Widget build(BuildContext context) {
     // provide streams to the app to watch
-    return StreamProvider<List<Log>>.value(
+    return StreamProvider<List<User>>.value(
       value: logService.asList(),
       lazy: true,
       child: child,

@@ -14,20 +14,8 @@ class User {
       name: data['name'],
       email: data['email'],
     );
-    // username: data['username'],
-    // age: data['age'],
-    // photoUrl: data['photoUrl']);
   }
-  // factory User.fromMap(Map data) {
-  //   return User(
-  //       uid: data['uid'],
-  //       name: data['name'],
-  //       username: data['username'],
-  //       age: data['age'],
-  //       photoUrl: data['photoUrl']);
-  // }
 
-  get entriesPath => 'users/$uid/entries/';
   @override
   String toString() {
     return '{ name: $name, email: $email, uid: $uid }';

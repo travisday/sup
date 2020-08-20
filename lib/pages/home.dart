@@ -1,263 +1,39 @@
-import 'dart:math';
-
+import 'package:sup/model/user.dart';
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
-import 'package:sup/api/log_service.dart';
-import 'package:sup/model/log.dart';
-import 'package:sup/widgets/text_item.dart';
 import 'package:provider/provider.dart';
-import 'package:sup/pages/profile.dart';
-
-import 'package:sup/provider/theme_provider.dart';
-
-var firstPageItems = [
-  {
-    "asset": "BalletDoodle.png",
-    "text": "get free. get writing.",
-  },
-  // {
-  //   "asset": "GroovyDoodle.png",
-  //   "text": "",
-  // },
-  {
-    "asset": "PettingDoodle.png",
-    "text": "be kind to yourself.",
-  },
-  {
-    "asset": "SitReadingDoodle.png",
-    "text": "what's on your mind?",
-  },
-  // {
-  //   "asset": "BikiniDoodle.png",
-  //   "text": "",
-  // },
-  {
-    "asset": "GroovySittingDoodle.png",
-    "text": "breathe deep. relax.",
-  },
-  {
-    "asset": "PlantDoodle.png",
-    "text": "take a moment and appreciate nature.",
-  },
-  {
-    "asset": "SittingDoodle.png",
-    "text": "whatcha thinking about?",
-  },
-  {
-    "asset": "CoffeeDoddle.png",
-    "text": "remember: don't carry too much at once.",
-  },
-  {
-    "asset": "IceCreamDoodle.png",
-    "text": "treat yourself today. you deserve it.",
-  },
-  {
-    "asset": "ReadingDoodle.png",
-    "text": "stuck? try writing about something interesting you read.",
-  },
-  {
-    "asset": "SleekDoodle.png",
-    "text": "in a hurry lately? slow down every once in a while.",
-  },
-  {
-    "asset": "DancingDoodle.png",
-    "text": "try writing about your favorite song. how does it make you feel?",
-  },
-  {
-    "asset": "LayingDoodle.png",
-    "text": "remember to relax for a bit if you need it.",
-  },
-  {
-    "asset": "ReadingSideDoodle.png",
-    "text": "try learning something new every day. what did you learn today?",
-  },
-  {
-    "asset": "SprintingDoodle.png",
-    "text": "it's just 5 minutes. get your thoughts out and feel better.",
-  },
-  {
-    "asset": "DogJumpDoodle.png",
-    "text": "remember to take time for the things that make you happy.",
-  },
-  {
-    "asset": "LovingDoodle.png",
-    "text": "tell someone how much you love them today.",
-  },
-  // {
-  //   "asset": "RollerSkatingDoodle.png",
-  //   "text": "",
-  // },
-  {
-    "asset": "StrollingDoodle.png",
-    "text": "remember to get up and move your body. it's good for you.",
-  },
-  {
-    "asset": "DoogieDoodle.png",
-    "text": "write down a story that you'll want to remember.",
-  },
-  {
-    "asset": "MeditatingDoodle.png",
-    "text":
-        "remember: just writing your thoughts down makes them much easier to deal with.",
-  },
-  // {
-  //   "asset": "RollingDoodle.png",
-  //   "text": "",
-  // },
-  {
-    "asset": "SwingingDoodle.png",
-    "text": "remember to drink water.",
-  },
-  // {
-  //   "asset": "DumpingDoodle.png",
-  //   "text": "",
-  // },
-  {
-    "asset": "MessyDoodle.png",
-    "text":
-        "scattered thoughts? write them down. you'll be amazed what happens.",
-  },
-  // {
-  //   "asset": "RunningDoodle.png",
-  //   "text": "",
-  // },
-  {
-    "asset": "UnboxingDoodle.png",
-    "text": "take some time and unpack whatever you're thinking about.",
-  },
-  // {
-  //   "asset": "FloatDoodle.png",
-  //   "text": "",
-  // },
-  // {
-  //   "asset": "MoshingDoodle.png",
-  //   "text": "",
-  // },
-  {
-    "asset": "SelfieDoodle.png",
-    "text": "smile! today's your day.",
-  },
-  {
-    "asset": "ZombieingDoodle.png",
-    "text": "what's going on today? write it down.",
-  },
-];
-
-var firstPageItem = firstPageItems[Random().nextInt(firstPageItems.length)];
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: RandomWords());
+    return Scaffold(body: UserList());
   }
 }
 
-class RandomWords extends StatefulWidget {
-  @override
-  _RandomWordsState createState() => _RandomWordsState();
-}
-
-class _RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _saved = Set<WordPair>();
-  final _biggerFont = TextStyle(fontSize: 18.0);
-
+class UserList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: _buildSuggestions(),
-    );
-  }
+    var users = Provider.of<List<User>>(context);
+    if (users == null) return Text("null");
 
-  Widget _buildSuggestions() {
+    if (users.isEmpty) return Text("empty");
     return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-          }
-          return _buildRow(_suggestions[index]);
+        itemCount: users.length,
+        itemBuilder: (BuildContext context, int index) {
+          return _buildRow(users[index]);
         });
   }
 
-  Widget _buildRow(WordPair pair) {
-    final alreadySaved = _saved.contains(pair);
+  Widget _buildRow(User user) {
+    final alreadySaved = false;
     return ListTile(
       title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
+        user.name,
       ),
       trailing: Icon(
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.pink : null,
       ),
-      onTap: () {
-        setState(() {
-          if (alreadySaved) {
-            _saved.remove(pair);
-          } else {
-            _saved.add(pair);
-          }
-        });
-      },
+      onTap: () {},
     );
   }
 }
-
-// class Logs extends StatelessWidget {
-//   final firstPageItem;
-
-//   Logs({Key key, this.firstPageItem}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     var entries = Provider.of<List<Log>>(context);
-
-//     if (entries == null) return Text('loading...');
-
-//     return PageView.builder(
-//         itemCount: entries.length + 1,
-//         itemBuilder: (BuildContext context, int index) {
-//           return _buildFirstPage(context, entries);
-//         });
-//   }
-
-//   Widget _buildFirstPage(BuildContext context, List<Log> entries) {
-//     var isDark =
-//         Provider.of<ThemeProvider>(context).currentTheme == MyThemes.dark;
-//     var assetsPath =
-//         'assets/img/${isDark ? "open-doodles-dark" : "open-doodles"}/png/';
-//     return Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: <Widget>[
-//         new Image(
-//             width: 400.0,
-//             // height: 400.0,
-//             fit: BoxFit.contain,
-//             image: new AssetImage(assetsPath + firstPageItem["asset"])),
-//         Container(
-//           padding: EdgeInsets.fromLTRB(24, 24, 24, 144),
-//           child: Text(
-//             firstPageItem["text"],
-//             textAlign: TextAlign.center,
-//             style: TextStyle(
-//               color: Theme.of(context).textTheme.caption.color,
-//               fontStyle: FontStyle.italic,
-//             ),
-//           ),
-//         ),
-//         if (entries.length > 0)
-//           Text(
-//             "(swipe for past entries) >",
-//             style: TextStyle(
-//               color: Theme.of(context).textTheme.caption.color,
-//               fontStyle: FontStyle.italic,
-//             ),
-//           )
-//       ],
-//     );
-//   }
-// }
