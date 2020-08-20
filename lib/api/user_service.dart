@@ -14,6 +14,13 @@ class UserService {
   CollectionReference getUsers() {
     return this._db.collection('users');
   }
+
+  addToScore(User user) async {
+    Firestore.instance
+        .collection('users')
+        .document(user.uid)
+        .setData({'score': (user.score ?? 0) + 1}, merge: true);
+  }
 }
 
 final UserService logService = UserService(Firestore.instance);

@@ -1,3 +1,4 @@
+import 'package:sup/api/user_service.dart';
 import 'package:sup/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,13 +28,15 @@ class UserList extends StatelessWidget {
     final alreadySaved = false;
     return ListTile(
       title: Text(
-        user.name,
+        "${user.name} (${user.score})",
       ),
       trailing: Icon(
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.pink : null,
       ),
-      onTap: () {},
+      onTap: () {
+        logService.addToScore(user);
+      },
     );
   }
 }

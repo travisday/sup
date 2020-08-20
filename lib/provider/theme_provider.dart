@@ -42,8 +42,8 @@ var darkTheme = ThemeData(
   accentColor: Colors.pinkAccent[200],
   canvasColor: dark[700],
   textTheme: ddt.textTheme.copyWith(
-    body1: ddt.textTheme.body1.copyWith(fontSize: 16.0),
-    body2: ddt.textTheme.body1.copyWith(fontSize: 16.0),
+    bodyText2: ddt.textTheme.bodyText2.copyWith(fontSize: 16.0),
+    bodyText1: ddt.textTheme.bodyText2.copyWith(fontSize: 16.0),
   ),
   chipTheme: ddt.chipTheme.copyWith(
     backgroundColor: dark[600],
@@ -62,8 +62,8 @@ var lightTheme = ThemeData(
   canvasColor: Color(0xFFF2F2F7),
   backgroundColor: Color(0xFF6B64A8),
   textTheme: ltt.textTheme.copyWith(
-    body1: ltt.textTheme.body1.copyWith(fontSize: 16.0),
-    body2: ltt.textTheme.body1.copyWith(fontSize: 16.0),
+    bodyText2: ltt.textTheme.bodyText2.copyWith(fontSize: 16.0),
+    bodyText1: ltt.textTheme.bodyText2.copyWith(fontSize: 16.0),
   ),
   chipTheme: ltt.chipTheme.copyWith(
     secondarySelectedColor: Color(0xFF6B64A8),

@@ -1,12 +1,10 @@
 import 'package:sup/pages/fancy_drawer.dart';
-import 'package:sup/pages/fancy_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:sup/api/auth.dart';
 import 'package:sup/pages/login.dart';
 import 'package:sup/provider/users_provider.dart';
 import 'package:sup/provider/theme_provider.dart';
 import 'package:sup/provider/keyboard_dismisser.dart';
-import 'package:sup/pages/home.dart';
 import 'package:provider/provider.dart';
 
 class MyApp extends StatelessWidget {

@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:sup/pages/profile.dart';
-import 'package:sup/pages/home.dart';
-import 'package:sup/pages/tabs.dart';
 import 'package:sup/pages/bar.dart';
 
 class FancyDrawer extends StatefulWidget {

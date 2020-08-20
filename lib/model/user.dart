@@ -4,8 +4,9 @@ class User {
   String uid;
   String name;
   String email;
+  int score;
 
-  User({this.uid, this.name, this.email});
+  User({this.uid, this.name, this.email, this.score = -1});
 
   factory User.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;
@@ -13,11 +14,12 @@ class User {
       uid: doc.documentID,
       name: data['name'],
       email: data['email'],
+      score: data['score'] ?? -1,
     );
   }
 
   @override
   String toString() {
-    return '{ name: $name, email: $email, uid: $uid }';
+    return '{ name: $name, email: $email, score: $score uid: $uid }';
   }
 }
