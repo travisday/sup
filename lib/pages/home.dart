@@ -35,7 +35,7 @@ class UserList extends StatelessWidget {
         color: alreadySaved ? Colors.pink : null,
       ),
       onTap: () {
-        logService.addToScore(user);
+        userService.addToScore(user);
       },
     );
   }

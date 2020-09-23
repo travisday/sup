@@ -23,3 +23,9 @@ class User {
     return '{ name: $name, email: $email, score: $score uid: $uid }';
   }
 }
+
+class Friend extends User {
+  factory Friend.fromFirestore(DocumentSnapshot doc) {
+    return User.fromFirestore(doc);
+  }
+}

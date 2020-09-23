@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sup/api/auth.dart';
 import 'package:sup/model/user.dart';
 
 class UserService {
@@ -6,13 +7,17 @@ class UserService {
 
   UserService(this._db);
 
-  Stream<List<User>> asList() {
-    return getUsers().snapshots().map((list) =>
-        list.documents.map((doc) => User.fromFirestore(doc)).toList());
+  Stream<List<User>> friendsList() {
+    User me = auth.getCurrentUser();
+
+    return getUsers().snapshots().map((list) => list.documents
+        .where((element) => element.documentID != me.uid)
+        .map((doc) => User.fromFirestore(doc))
+        .toList());
   }
 
-  CollectionReference getUsers() {
-    return this._db.collection('users');
+  Query getUsers() {
+    return this._db.collection('users').orderBy('score').limit(20);
   }
 
   addToScore(User user) async {
@@ -23,4 +28,4 @@ class UserService {
   }
 }
 
-final UserService logService = UserService(Firestore.instance);
+final UserService userService = UserService(Firestore.instance);

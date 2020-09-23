@@ -11,7 +11,7 @@ class FriendProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     // provide streams to the app to watch
     return StreamProvider<List<User>>.value(
-      value: logService.asList(),
+      value: userService.friendsList(),
       lazy: true,
       child: child,
     );

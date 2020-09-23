@@ -127,11 +127,11 @@ class _LoginPageState extends State<LoginPage>
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(top: 75.0),
-                  child: new Image(
-                      width: 250.0,
-                      height: 191.0,
-                      fit: BoxFit.fill,
-                      image: new AssetImage('assets/img/login_logo.png')),
+                  // child: new Image(
+                  //     width: 250.0,
+                  //     height: 191.0,
+                  //     fit: BoxFit.fill,
+                  //     image: new AssetImage('assets/img/login_logo.png')),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20.0),
