@@ -11,7 +11,7 @@ description: Personal Journal Companion by Talor Anderson
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.20.4
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -26,6 +26,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   cloud_firestore:
   firebase_auth: 0.15.4
+  firebase_messaging: ^7.0.0
   provider:
   intl:
   date_util: 0.1.4
