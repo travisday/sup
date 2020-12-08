@@ -29,14 +29,14 @@ class Bar extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            FlatButton(
-              child: Icon(
-                Icons.add,
-                color: Theme.of(context).disabledColor,
-              ),
-              onPressed: onDrawerTap,
-              padding: EdgeInsets.all(0),
-            ),
+            // FlatButton(
+            //   child: Icon(
+            //     Icons.add,
+            //     color: Theme.of(context).disabledColor,
+            //   ),
+            //   onPressed: onDrawerTap,
+            //   padding: EdgeInsets.all(0),
+            // ),
           ],
         ),
       ),

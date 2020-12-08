@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:sup/api/auth.dart';
 import 'package:sup/model/user.dart';
 
@@ -20,11 +21,27 @@ class UserService {
     return this._db.collection('users').orderBy('score').limit(20);
   }
 
+  User me() {
+    return auth.getCurrentUser();
+  }
+
   addToScore(User user) async {
     Firestore.instance
         .collection('users')
         .document(user.uid)
         .setData({'score': (user.score ?? 0) + 1}, merge: true);
+  }
+
+  addFavUser(User user, User fav) async {
+    Firestore.instance.collection('users').document(user.uid).updateData({
+      "favUsers": FieldValue.arrayUnion([fav.name])
+    });
+  }
+
+  removeFavUser(User user, User fav) async {
+    Firestore.instance.collection('users').document(user.uid).updateData({
+      "favUsers": FieldValue.arrayRemove([fav.name])
+    });
   }
 }
 

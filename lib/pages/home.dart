@@ -10,10 +10,16 @@ class Home extends StatelessWidget {
   }
 }
 
-class UserList extends StatelessWidget {
+class UserList extends StatefulWidget {
+  @override
+  _UserList createState() => _UserList();
+}
+
+class _UserList extends State<UserList> {
   @override
   Widget build(BuildContext context) {
     var users = Provider.of<List<User>>(context);
+
     if (users == null) return Text("null");
 
     if (users.isEmpty) return Text("empty");
@@ -25,16 +31,33 @@ class UserList extends StatelessWidget {
   }
 
   Widget _buildRow(User user) {
-    final alreadySaved = false;
+    bool isFav = false;
+
+    getFavStatus() {
+      setState(() {
+        isFav = userService.me().favUsers.contains(user.name);
+        print("$isFav");
+      });
+    }
+
     return ListTile(
+      leading: Icon(Icons.person),
       title: Text(
         "${user.name} (${user.score})",
       ),
       trailing: Icon(
-        alreadySaved ? Icons.favorite : Icons.favorite_border,
-        color: alreadySaved ? Colors.pink : null,
+        isFav ? Icons.favorite : Icons.favorite_border,
+        color: isFav ? Colors.pink : null,
       ),
       onTap: () {
+        getFavStatus();
+        if (isFav) {
+          userService.removeFavUser(userService.me(), user);
+        } else {
+          userService.addFavUser(userService.me(), user);
+        }
+      },
+      onLongPress: () {
         userService.addToScore(user);
       },
     );
