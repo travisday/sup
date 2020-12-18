@@ -19,26 +19,24 @@ class _UserList extends State<UserList> {
   @override
   Widget build(BuildContext context) {
     var users = Provider.of<List<User>>(context);
-
+    var me = Provider.of<User>(context);
     if (users == null) return Text("null");
 
+    var sorted = users
+        .where((element) => me.favUsers.contains(element.name))
+        .toList()
+          ..addAll(
+              users.where((element) => !me.favUsers.contains(element.name)));
     if (users.isEmpty) return Text("empty");
     return ListView.builder(
-        itemCount: users.length,
+        itemCount: sorted.length,
         itemBuilder: (BuildContext context, int index) {
-          return _buildRow(users[index]);
+          return _buildRow(sorted[index], me);
         });
   }
 
-  Widget _buildRow(User user) {
-    bool isFav = false;
-
-    getFavStatus() {
-      setState(() {
-        isFav = userService.me().favUsers.contains(user.name);
-        print("$isFav");
-      });
-    }
+  Widget _buildRow(User user, User me) {
+    bool isFav = me.favUsers.contains(user.name);
 
     return ListTile(
       leading: Icon(Icons.person),
@@ -50,11 +48,14 @@ class _UserList extends State<UserList> {
         color: isFav ? Colors.pink : null,
       ),
       onTap: () {
-        getFavStatus();
         if (isFav) {
-          userService.removeFavUser(userService.me(), user);
+          print('removed');
+
+          userService.removeFavUser(me, user);
         } else {
-          userService.addFavUser(userService.me(), user);
+          print('added');
+
+          userService.addFavUser(me, user);
         }
       },
       onLongPress: () {

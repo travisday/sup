@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:sup/api/auth.dart';
 import 'package:sup/model/user.dart';
 
@@ -21,8 +20,13 @@ class UserService {
     return this._db.collection('users').orderBy('score').limit(20);
   }
 
-  User me() {
-    return auth.getCurrentUser();
+  Stream<User> me() {
+    return this
+        ._db
+        .collection("users")
+        .document(auth.getCurrentUser().uid)
+        .snapshots()
+        .map((doc) => User.fromFirestore(doc));
   }
 
   addToScore(User user) async {
