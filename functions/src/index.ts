@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 admin.initializeApp();
 
-const sendNotification = functions.https.onCall(
+exports.sendMessage = functions.https.onCall(
   async ({ idTo, idFrom }: { idTo?: string; idFrom: string }) => {
     console.log("----------------start function--------------------");
 
@@ -17,7 +17,7 @@ const sendNotification = functions.https.onCall(
           console.log(`Found user to: ${userTo.data().name}`);
           if (!userTo.data().pushToken) {
             console.log("Can not find pushToken target user");
-            return null;
+            return;
           }
           // Get info user from (sent)
           admin
@@ -52,5 +52,3 @@ const sendNotification = functions.https.onCall(
     return null;
   }
 );
-
-export default sendNotification;
