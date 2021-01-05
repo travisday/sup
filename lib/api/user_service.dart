@@ -49,7 +49,26 @@ class UserService {
     });
   }
 
-  sendSup(User friend) async {}
+  sendSup(User friend) async {
+    var id = auth.getCurrentUser().uid;
+    var documentReference = _db
+        .collection('sup')
+        .document(id)
+        .collection(friend.uid)
+        .document(DateTime.now().millisecondsSinceEpoch.toString());
+
+    await _db.runTransaction((transaction) async {
+      transaction.set(
+        documentReference,
+        {
+          'from': id,
+          'to': friend.uid,
+          'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+        },
+      );
+    });
+  }
+
   setPushToken(String token) async {
     this
         ._db
