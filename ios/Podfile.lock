@@ -222,10 +222,9 @@ PODS:
     - Firebase/Core
     - Firebase/Firestore (~> 6.0)
     - Flutter
-  - cloud_functions (0.6.0-1):
-    - Firebase/CoreOnly (~> 6.26.0)
-    - Firebase/Functions (~> 6.26.0)
-    - firebase_core
+  - cloud_functions (0.0.1):
+    - Firebase/Core
+    - Firebase/Functions (~> 6.0)
     - Flutter
   - Firebase/Auth (6.26.0):
     - Firebase/CoreOnly
@@ -446,7 +445,7 @@ SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   cloud_firestore: c6f34148c1dfbb57a6147f9bb49c1c9f5c27036e
-  cloud_functions: cc36e7b5ec30848fbf6ff5f240188d51104ce9dd
+  cloud_functions: 20ba5a917ef4e8f5e60648c7398c272b38a66051
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6
   firebase_auth: 1f46484071219159ad6c64d304af425ad7373052
   firebase_core: dc539d4bdc69894823e4a6e557034a9e48960f21
@@ -479,4 +478,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.10.0.beta.1
+COCOAPODS: 1.9.3
