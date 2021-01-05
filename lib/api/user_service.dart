@@ -38,13 +38,13 @@ class UserService {
 
   addFavUser(User user, User fav) async {
     Firestore.instance.collection('users').document(user.uid).updateData({
-      "favUsers": FieldValue.arrayUnion([fav.name])
+      "favUsers": FieldValue.arrayUnion([fav.uid])
     });
   }
 
   removeFavUser(User user, User fav) async {
     Firestore.instance.collection('users').document(user.uid).updateData({
-      "favUsers": FieldValue.arrayRemove([fav.name])
+      "favUsers": FieldValue.arrayRemove([fav.uid])
     });
   }
 

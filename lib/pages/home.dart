@@ -23,10 +23,10 @@ class _UserList extends State<UserList> {
     if (users == null) return Text("null");
 
     var sorted = users
-        .where((element) => me.favUsers.contains(element.name))
+        .where((element) => me.favUsers.contains(element.uid))
         .toList()
           ..addAll(
-              users.where((element) => !me.favUsers.contains(element.name)));
+              users.where((element) => !me.favUsers.contains(element.uid)));
     if (users.isEmpty) return Text("empty");
     return ListView.builder(
         itemCount: sorted.length,
@@ -36,7 +36,7 @@ class _UserList extends State<UserList> {
   }
 
   Widget _buildRow(User user, User me) {
-    bool isFav = me.favUsers.contains(user.name);
+    bool isFav = me.favUsers.contains(user.uid);
 
     return ListTile(
       leading: Icon(Icons.person),
