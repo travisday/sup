@@ -48,6 +48,9 @@ class _UserList extends State<UserList> {
         color: isFav ? Colors.pink : null,
       ),
       onTap: () {
+        // userService.sendSup(user);
+      },
+      onLongPress: () {
         if (isFav) {
           print('removed');
 
@@ -58,9 +61,9 @@ class _UserList extends State<UserList> {
           userService.addFavUser(me, user);
         }
       },
-      onLongPress: () {
-        userService.addToScore(user);
-      },
+      // onLongPress: () {
+      //   userService.addToScore(user);
+      // },
     );
   }
 }
