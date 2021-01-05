@@ -43,22 +43,29 @@ class _UserList extends State<UserList> {
       title: Text(
         "${user.name} (${user.score})",
       ),
-      trailing: Icon(
-        isFav ? Icons.favorite : Icons.favorite_border,
-        color: isFav ? Colors.pink : null,
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          IconButton(
+            icon: Icon(
+              isFav ? Icons.favorite : Icons.favorite_border,
+              color: isFav ? Colors.pink : null,
+            ),
+            onPressed: () {
+              if (isFav) {
+                print('removed');
+
+                userService.removeFavUser(me, user);
+              } else {
+                print('added');
+
+                userService.addFavUser(me, user);
+              }
+            },
+          ),
+        ],
       ),
       onTap: () {
-        if (isFav) {
-          print('removed');
-
-          userService.removeFavUser(me, user);
-        } else {
-          print('added');
-
-          userService.addFavUser(me, user);
-        }
-      },
-      onLongPress: () {
         userService.addToScore(user);
       },
     );
