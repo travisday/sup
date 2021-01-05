@@ -1,6 +1,7 @@
 import 'package:sup/api/user_service.dart';
 import 'package:sup/model/user.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
@@ -66,7 +67,10 @@ class _UserList extends State<UserList> {
         ],
       ),
       onTap: () {
-        userService.addToScore(user);
+        var sendMessage = CloudFunctions.instance.getHttpsCallable(
+          functionName: "sendMessage",
+        )..timeout = const Duration(seconds: 30);
+        sendMessage.call({"idTo": user.uid, "idFrom": me.uid});
       },
     );
   }
