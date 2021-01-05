@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:sup/api/user_service.dart';
 
 Future<dynamic> messageHandler(Map<String, dynamic> message) {
   print(message);
@@ -28,8 +29,9 @@ class PushNotificationsManager {
 
       // For testing purposes print the Firebase Messaging token
       String token = await _firebaseMessaging.getToken();
-      //print("FirebaseMessaging token: $token");
+      print("FirebaseMessaging token: $token");
 
+      userService.setPushToken(token);
       _initialized = true;
     }
   }
