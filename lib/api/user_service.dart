@@ -47,6 +47,15 @@ class UserService {
       "favUsers": FieldValue.arrayRemove([fav.name])
     });
   }
+
+  sendSup(User friend) async {}
+  setPushToken(String token) async {
+    this
+        ._db
+        .collection('users')
+        .document(auth.getCurrentUser().uid)
+        .updateData({'pushToken': token});
+  }
 }
 
 final UserService userService = UserService(Firestore.instance);
