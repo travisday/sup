@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sup/api/auth.dart';
 import 'package:sup/model/user.dart';
 
@@ -53,7 +54,7 @@ class UserService {
     this
         ._db
         .collection('users')
-        .document(auth.getCurrentUser().uid)
+        .document((await FirebaseAuth.instance.currentUser()).uid)
         .updateData({'pushToken': token});
   }
 }
