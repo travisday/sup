@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sup/api/auth.dart';
 import 'package:sup/model/user.dart';
+import 'package:sup/api/score.dart';
 
 class UserService {
   final Firestore _db;
@@ -31,10 +32,9 @@ class UserService {
   }
 
   addToScore(User user) async {
-    Firestore.instance
-        .collection('users')
-        .document(user.uid)
-        .setData({'score': (user.score ?? 0) + 1}, merge: true);
+    Firestore.instance.collection('users').document(user.uid).setData(
+        {'score': (user.score ?? 0) + scoreService.calculateScore()},
+        merge: true);
   }
 
   addFavUser(User user, User fav) async {

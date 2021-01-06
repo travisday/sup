@@ -71,6 +71,7 @@ class _UserList extends State<UserList> {
           functionName: "sendMessage",
         )..timeout = const Duration(seconds: 30);
         sendMessage.call({"idTo": user.uid, "idFrom": me.uid});
+        userService.addToScore(user);
       },
     );
   }
