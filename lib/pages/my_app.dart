@@ -8,6 +8,7 @@ import 'package:sup/provider/users_provider.dart';
 import 'package:sup/provider/theme_provider.dart';
 import 'package:sup/provider/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
+import 'package:sup/widgets/firebase_message_wrapper.dart';
 
 class MyApp extends StatelessWidget {
   Widget _getFirstRoute(BuildContext context) {

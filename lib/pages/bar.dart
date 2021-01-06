@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sup/pages/home.dart';
+import 'package:sup/widgets/firebase_message_wrapper.dart';
 
 class Bar extends StatelessWidget {
   final Function() onDrawerTap;
@@ -47,9 +48,10 @@ class Bar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: _buildHeader(context),
-          body: Home()),
+        backgroundColor: Colors.transparent,
+        appBar: _buildHeader(context),
+        body: FirebaseMessageWrapper(Home()),
+      ),
     );
   }
 }

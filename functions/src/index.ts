@@ -38,6 +38,8 @@ exports.sendMessage = functions.https.onCall(
     }
     const payload: admin.messaging.MessagingPayload = {
       notification: {
+        from: idFrom,
+        name: userFrom.name,
         title: `${userFrom.name}: sup`,
         badge: "1",
         sound: "default",
