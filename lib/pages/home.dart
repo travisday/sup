@@ -30,8 +30,20 @@ class _UserList extends State<UserList> {
               users.where((element) => !me.favUsers.contains(element.uid)));
     if (users.isEmpty) return Text("empty");
     return ListView.builder(
-        itemCount: sorted.length,
+        itemCount: sorted == null ? 1 : sorted.length + 1,
         itemBuilder: (BuildContext context, int index) {
+          if (index == 0) {
+            // return the header
+            return new Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text("Score: ${me.score}"),
+                Text("Sups: ${me.sendCount}")
+              ],
+            );
+          }
+          index -= 1;
           return _buildRow(sorted[index], me);
         });
   }
