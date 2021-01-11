@@ -5,9 +5,16 @@ class User {
   String name;
   String email;
   int score;
+  int sendCount;
   List<String> favUsers;
 
-  User({this.uid, this.name, this.email, this.score = -1, this.favUsers});
+  User(
+      {this.uid,
+      this.name,
+      this.email,
+      this.score = -1,
+      this.sendCount,
+      this.favUsers});
 
   factory User.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data;
@@ -16,6 +23,7 @@ class User {
         name: data['name'],
         email: data['email'],
         score: data['score'] ?? -1,
+        sendCount: data['sendCount'] ?? 5,
         favUsers: List.from(data['favUsers']));
   }
 
