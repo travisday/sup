@@ -47,7 +47,7 @@ exports.sendMessage = functions.https.onCall(
       },
     };
     var rec = admin.firestore().collection("users").doc(idTo);
-    //var sender = admin.firestore().collection("users").doc(idFrom);
+    var sender = admin.firestore().collection("users").doc(idFrom);
     // Let push to the target device
     await admin
       .messaging()
@@ -65,6 +65,19 @@ exports.sendMessage = functions.https.onCall(
             score: newScore,
         });
         console.log("Score updated");
+      }))
+      .then(() => admin.firestore().runTransaction(async transaction => {
+        const doc = await transaction.get(sender);
+        if(!doc.exists){
+             throw "Document does not exist";
+        }
+        const newCount = doc?.data()?.sendCount - 1;
+        if (!(newCount < 0)) {
+          transaction.update(sender, {
+            sendCount: newCount,
+          });
+        }
+        console.log("Count updated");
       }))
       .catch((error) => {
         console.log("Error sending message:", error);
