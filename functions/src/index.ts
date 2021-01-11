@@ -2,6 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 admin.initializeApp();
 
+
 exports.sendMessage = functions.https.onCall(
   async ({ idTo, idFrom }: { idTo?: string; idFrom: string }) => {
     console.log("----------------start function--------------------");
@@ -45,6 +46,8 @@ exports.sendMessage = functions.https.onCall(
         sound: "default",
       },
     };
+    var rec = admin.firestore().collection("users").doc(idTo);
+    //var sender = admin.firestore().collection("users").doc(idFrom);
     // Let push to the target device
     await admin
       .messaging()
@@ -52,6 +55,17 @@ exports.sendMessage = functions.https.onCall(
       .then((response) => {
         console.log("Successfully sent message:", response);
       })
+      .then(() => admin.firestore().runTransaction(async transaction => {
+        const doc = await transaction.get(rec);
+        if(!doc.exists){
+             throw "Document does not exist";
+        }
+        const newScore = doc?.data()?.score + 1;
+        transaction.update(rec, {
+            score: newScore,
+        });
+        console.log("Score updated");
+      }))
       .catch((error) => {
         console.log("Error sending message:", error);
       });
