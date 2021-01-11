@@ -84,6 +84,28 @@ class _UserList extends State<UserList> {
             functionName: "sendMessage",
           )..timeout = const Duration(seconds: 30);
           sendMessage.call({"idTo": user.uid, "idFrom": me.uid});
+          SnackBar bar = SnackBar(
+            behavior: SnackBarBehavior.floating,
+            duration: Duration(seconds: 10),
+            action: SnackBarAction(
+              label: "Close",
+              textColor: Colors.redAccent,
+              onPressed: () => Scaffold.of(context).hideCurrentSnackBar(),
+            ),
+            content: Padding(
+              padding: const EdgeInsets.only(bottom: 25.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text("sup sent to ${user.name}"),
+                ],
+              ),
+            ),
+          );
+          Scaffold.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(bar);
         } else {
           SnackBar bar = SnackBar(
             behavior: SnackBarBehavior.floating,
