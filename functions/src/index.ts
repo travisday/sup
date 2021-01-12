@@ -85,3 +85,20 @@ exports.sendMessage = functions.https.onCall(
     return null;
   }
 );
+
+exports.regenerateSups = functions.pubsub.schedule('every 24 hours').onRun((context) => {
+
+  admin.firestore().collection('users').get().then((querySnapshot) => {
+      querySnapshot.forEach(function(doc) {
+          const max = doc.data().maxSup
+          doc.ref.update({sendCount: max});
+      });
+  })
+  .then(() => console.log("all sups regenerated"))
+  .catch(error => {
+    console.log(error);
+    return null;
+  });
+
+  return null;
+});

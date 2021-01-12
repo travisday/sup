@@ -6,6 +6,7 @@ class User {
   String email;
   int score;
   int sendCount;
+  int maxSup;
   List<String> favUsers;
 
   User(
@@ -14,6 +15,7 @@ class User {
       this.email,
       this.score = -1,
       this.sendCount,
+      this.maxSup,
       this.favUsers});
 
   factory User.fromFirestore(DocumentSnapshot doc) {
@@ -24,6 +26,7 @@ class User {
         email: data['email'],
         score: data['score'] ?? -1,
         sendCount: data['sendCount'] ?? 5,
+        maxSup: data['maxSup'] ?? 5,
         favUsers: List.from(data['favUsers']));
   }
 
