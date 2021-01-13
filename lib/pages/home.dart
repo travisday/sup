@@ -29,23 +29,43 @@ class _UserList extends State<UserList> {
           ..addAll(
               users.where((element) => !me.favUsers.contains(element.uid)));
     if (users.isEmpty) return Text("empty");
-    return ListView.builder(
-        itemCount: sorted == null ? 1 : sorted.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
-            // return the header
-            return new Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text("Score: ${me.score}"),
-                Text("Sups: ${me.sendCount}")
-              ],
-            );
-          }
-          index -= 1;
-          return _buildRow(sorted[index], me);
-        });
+    return Column(children: <Widget>[
+      Container(
+          //color: Colors.red,
+          child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          Text("Score: ${me.score}"),
+          Text("Sups: ${me.sendCount}")
+        ],
+      )),
+      Expanded(
+          child: Container(
+              child: ListView.builder(
+                  itemCount: sorted.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _buildRow(sorted[index], me);
+                  })))
+    ]);
+
+    // return ListView.builder(
+    // itemCount: sorted == null ? 1 : sorted.length + 1,
+    // itemBuilder: (BuildContext context, int index) {
+    //   if (index == 0) {
+    //     // return the header
+    //     return new Row(
+    //       mainAxisSize: MainAxisSize.min,
+    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //       children: <Widget>[
+    //         Text("Score: ${me.score}"),
+    //         Text("Sups: ${me.sendCount}")
+    //       ],
+    //     );
+    //   }
+    //   index -= 1;
+    //   return _buildRow(sorted[index], me);
+    // });
   }
 
   Widget _buildRow(User user, User me) {
@@ -86,7 +106,7 @@ class _UserList extends State<UserList> {
           sendMessage.call({"idTo": user.uid, "idFrom": me.uid});
           SnackBar bar = SnackBar(
             behavior: SnackBarBehavior.floating,
-            duration: Duration(seconds: 10),
+            duration: Duration(seconds: 3),
             action: SnackBarAction(
               label: "Close",
               textColor: Colors.redAccent,
