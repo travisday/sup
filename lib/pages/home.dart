@@ -2,7 +2,10 @@ import 'package:sup/api/user_service.dart';
 import 'package:sup/model/user.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
+Color yellow = const Color(0xfece2fff);
 
 class Home extends StatelessWidget {
   @override
@@ -36,8 +39,14 @@ class _UserList extends State<UserList> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
-          Text("Score: ${me.score}"),
-          Text("Sups: ${me.sendCount}")
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            Icon(Icons.star, color: Colors.amberAccent),
+            Text("${me.score}", style: TextStyle(fontSize: 24))
+          ]),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            FaIcon(FontAwesomeIcons.handPeace, color: Colors.amberAccent),
+            Text("${me.sendCount}", style: TextStyle(fontSize: 24))
+          ]),
         ],
       )),
       Expanded(
@@ -48,109 +57,224 @@ class _UserList extends State<UserList> {
                     return _buildRow(sorted[index], me);
                   })))
     ]);
-
-    // return ListView.builder(
-    // itemCount: sorted == null ? 1 : sorted.length + 1,
-    // itemBuilder: (BuildContext context, int index) {
-    //   if (index == 0) {
-    //     // return the header
-    //     return new Row(
-    //       mainAxisSize: MainAxisSize.min,
-    //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-    //       children: <Widget>[
-    //         Text("Score: ${me.score}"),
-    //         Text("Sups: ${me.sendCount}")
-    //       ],
-    //     );
-    //   }
-    //   index -= 1;
-    //   return _buildRow(sorted[index], me);
-    // });
   }
 
   Widget _buildRow(User user, User me) {
     bool isFav = me.favUsers.contains(user.uid);
 
-    return ListTile(
-      leading: Icon(Icons.person),
-      title: Text(
-        "${user.name} (${user.score})",
-      ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          IconButton(
-            icon: Icon(
-              isFav ? Icons.favorite : Icons.favorite_border,
-              color: isFav ? Colors.pink : null,
-            ),
-            onPressed: () {
-              if (isFav) {
-                print('removed');
+    return Container(
+        height: 120,
+        child: Card(
+            elevation: 5,
+            child: Row(children: [
+              Expanded(
+                  flex: 33,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //Icon(Icons.person, size: 60),
+                        CircleAvatar(
+                            backgroundImage:
+                                NetworkImage('https://robohash.org/.png'),
+                            radius: 50)
+                      ])),
+              Expanded(
+                  flex: 66,
+                  child: Row(children: [
+                    Expanded(
+                        flex: 33,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("${user.name}",
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold)),
+                              Row(
+                                children: [
+                                  Icon(Icons.star,
+                                      size: 24, color: Colors.amberAccent),
+                                  Text(
+                                    "${user.score}",
+                                    style: TextStyle(fontSize: 24),
+                                  )
+                                ],
+                              )
+                            ])),
+                    Expanded(
+                        flex: 66,
+                        child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  isFav
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: isFav ? Colors.amberAccent : null,
+                                  size: 50,
+                                ),
+                                onPressed: () {
+                                  if (isFav) {
+                                    print('removed');
 
-                userService.removeFavUser(me, user);
-              } else {
-                print('added');
+                                    userService.removeFavUser(me, user);
+                                  } else {
+                                    print('added');
 
-                userService.addFavUser(me, user);
-              }
-            },
-          ),
-        ],
-      ),
-      onTap: () {
-        if (me.sendCount > 0) {
-          var sendMessage = CloudFunctions.instance.getHttpsCallable(
-            functionName: "sendMessage",
-          )..timeout = const Duration(seconds: 30);
-          sendMessage.call({"idTo": user.uid, "idFrom": me.uid});
-          SnackBar bar = SnackBar(
-            behavior: SnackBarBehavior.floating,
-            duration: Duration(seconds: 3),
-            action: SnackBarAction(
-              label: "Close",
-              textColor: Colors.redAccent,
-              onPressed: () => Scaffold.of(context).hideCurrentSnackBar(),
-            ),
-            content: Padding(
-              padding: const EdgeInsets.only(bottom: 25.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text("sup sent to ${user.name}"),
-                ],
-              ),
-            ),
-          );
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(bar);
-        } else {
-          SnackBar bar = SnackBar(
-            behavior: SnackBarBehavior.floating,
-            duration: Duration(seconds: 10),
-            action: SnackBarAction(
-              label: "Close",
-              textColor: Colors.redAccent,
-              onPressed: () => Scaffold.of(context).hideCurrentSnackBar(),
-            ),
-            content: Padding(
-              padding: const EdgeInsets.only(bottom: 25.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text("no more sups :("),
-                ],
-              ),
-            ),
-          );
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(bar);
-        }
-      },
-    );
+                                    userService.addFavUser(me, user);
+                                  }
+                                },
+                              ),
+                              IconButton(
+                                  icon: FaIcon(
+                                    FontAwesomeIcons.solidHandPeace,
+                                    color: Colors.amberAccent,
+                                    size: 50,
+                                  ),
+                                  onPressed: () {
+                                    if (me.sendCount > 0) {
+                                      var sendMessage = CloudFunctions.instance
+                                          .getHttpsCallable(
+                                        functionName: "sendMessage",
+                                      )..timeout = const Duration(seconds: 30);
+                                      sendMessage.call(
+                                          {"idTo": user.uid, "idFrom": me.uid});
+                                      SnackBar bar = SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        duration: Duration(seconds: 3),
+                                        action: SnackBarAction(
+                                          label: "Close",
+                                          textColor: Colors.redAccent,
+                                          onPressed: () => Scaffold.of(context)
+                                              .hideCurrentSnackBar(),
+                                        ),
+                                        content: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 25.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text("sup sent to ${user.name}"),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                      Scaffold.of(context)
+                                        ..hideCurrentSnackBar()
+                                        ..showSnackBar(bar);
+                                    } else {
+                                      SnackBar bar = SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        duration: Duration(seconds: 10),
+                                        action: SnackBarAction(
+                                          label: "Close",
+                                          textColor: Colors.redAccent,
+                                          onPressed: () => Scaffold.of(context)
+                                              .hideCurrentSnackBar(),
+                                        ),
+                                        content: Padding(
+                                          padding: const EdgeInsets.only(
+                                              bottom: 25.0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                              Text("no more sups :("),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                      Scaffold.of(context)
+                                        ..hideCurrentSnackBar()
+                                        ..showSnackBar(bar);
+                                    }
+                                  }),
+                            ]))
+                  ])),
+              // trailing: Row(
+              //   mainAxisSize: MainAxisSize.min,
+              //   children: <Widget>[
+              //     IconButton(
+              //       icon: Icon(
+              //         isFav ? Icons.favorite : Icons.favorite_border,
+              //         color: isFav ? Colors.pink : null,
+              //       ),
+              //       onPressed: () {
+              //         if (isFav) {
+              //           print('removed');
+
+              //           userService.removeFavUser(me, user);
+              //         } else {
+              //           print('added');
+
+              //           userService.addFavUser(me, user);
+              //         }
+              //       },
+              //     ),
+              //   ],
+              // ),
+              // onTap: () {
+              //   if (me.sendCount > 0) {
+              //     var sendMessage = CloudFunctions.instance.getHttpsCallable(
+              //       functionName: "sendMessage",
+              //     )..timeout = const Duration(seconds: 30);
+              //     sendMessage.call({"idTo": user.uid, "idFrom": me.uid});
+              //     SnackBar bar = SnackBar(
+              //       behavior: SnackBarBehavior.floating,
+              //       duration: Duration(seconds: 3),
+              //       action: SnackBarAction(
+              //         label: "Close",
+              //         textColor: Colors.redAccent,
+              //         onPressed: () =>
+              //             Scaffold.of(context).hideCurrentSnackBar(),
+              //       ),
+              //       content: Padding(
+              //         padding: const EdgeInsets.only(bottom: 25.0),
+              //         child: Column(
+              //           mainAxisSize: MainAxisSize.min,
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: <Widget>[
+              //             Text("sup sent to ${user.name}"),
+              //           ],
+              //         ),
+              //       ),
+              //     );
+              //     Scaffold.of(context)
+              //       ..hideCurrentSnackBar()
+              //       ..showSnackBar(bar);
+              //   } else {
+              //     SnackBar bar = SnackBar(
+              //       behavior: SnackBarBehavior.floating,
+              //       duration: Duration(seconds: 10),
+              //       action: SnackBarAction(
+              //         label: "Close",
+              //         textColor: Colors.redAccent,
+              //         onPressed: () =>
+              //             Scaffold.of(context).hideCurrentSnackBar(),
+              //       ),
+              //       content: Padding(
+              //         padding: const EdgeInsets.only(bottom: 25.0),
+              //         child: Column(
+              //           mainAxisSize: MainAxisSize.min,
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           children: <Widget>[
+              //             Text("no more sups :("),
+              //           ],
+              //         ),
+              //       ),
+              //     );
+              //     Scaffold.of(context)
+              //       ..hideCurrentSnackBar()
+              //       ..showSnackBar(bar);
+              //   }
+              // },
+            ])));
   }
 }
