@@ -7,15 +7,19 @@ class User {
   int score;
   int sendCount;
   int maxSup;
+  int streak;
+  DateTime lastOnline;
   List<String> favUsers;
 
   User(
       {this.uid,
       this.name,
       this.email,
-      this.score = -1,
+      this.score = 0,
       this.sendCount,
       this.maxSup,
+      this.lastOnline,
+      this.streak = 0,
       this.favUsers});
 
   factory User.fromFirestore(DocumentSnapshot doc) {
@@ -24,9 +28,12 @@ class User {
         uid: doc.documentID,
         name: data['name'],
         email: data['email'],
-        score: data['score'] ?? -1,
+        score: data['score'] ?? 0,
         sendCount: data['sendCount'] ?? 5,
         maxSup: data['maxSup'] ?? 5,
+        lastOnline:
+            (data['lastOnline'] as Timestamp).toDate() ?? DateTime.now(),
+        streak: data['streak'] ?? 0,
         favUsers: List.from(data['favUsers']));
   }
 

@@ -3,6 +3,7 @@ import 'package:sup/pages/home.dart';
 import 'package:sup/api/auth.dart';
 import 'package:sup/model/user.dart';
 import 'package:provider/provider.dart';
+import 'package:sup/api/user_service.dart';
 import 'package:sup/widgets/firebase_message_wrapper.dart';
 
 class Bar extends StatelessWidget {
@@ -13,7 +14,14 @@ class Bar extends StatelessWidget {
   User me = auth.getCurrentUser();
 
   Widget _buildHeader(BuildContext context) {
-    //User me = Provider.of<User>(context);
+    if (me.lastOnline.difference(DateTime.now()).inDays == 1) {
+      userService.updateStreak(me);
+    }
+
+    if (!(me.lastOnline.difference(DateTime.now()).inDays < 1)) {
+      userService.updateLastOnline(me);
+    }
+
     return PreferredSize(
       preferredSize: Size.fromHeight(40.0),
       child: Container(

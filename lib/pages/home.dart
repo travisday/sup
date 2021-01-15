@@ -25,7 +25,7 @@ class _UserList extends State<UserList> {
     var users = Provider.of<List<User>>(context);
     var me = Provider.of<User>(context);
     if (users == null) return Text("null");
-
+    //userService.updateLastOnline(me);
     var sorted = users
         .where((element) => me.favUsers.contains(element.uid))
         .toList()

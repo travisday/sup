@@ -55,30 +55,9 @@ exports.sendMessage = functions.https.onCall(
       .then((response) => {
         console.log("Successfully sent message:", response);
       })
-      .then(() => admin.firestore().runTransaction(async transaction => {
-        const doc = await transaction.get(rec);
-        if(!doc.exists){
-             throw "Document does not exist";
-        }
-        const newScore = doc?.data()?.score + 1;
-        transaction.update(rec, {
-            score: newScore,
-        });
-        console.log("Score updated");
-      }))
-      .then(() => admin.firestore().runTransaction(async transaction => {
-        const doc = await transaction.get(sender);
-        if(!doc.exists){
-             throw "Document does not exist";
-        }
-        const newCount = doc?.data()?.sendCount - 1;
-        if (!(newCount < 0)) {
-          transaction.update(sender, {
-            sendCount: newCount,
-          });
-        }
-        console.log("Count updated");
-      }))
+      .then(() => addRecScore(rec))
+      .then(() => decSenderCount(sender))
+      .then(() => addSenderScore(sender))
       .catch((error) => {
         console.log("Error sending message:", error);
       });
@@ -87,7 +66,6 @@ exports.sendMessage = functions.https.onCall(
 );
 
 exports.regenerateSups = functions.pubsub.schedule('every 24 hours').onRun((context) => {
-
   admin.firestore().collection('users').get().then((querySnapshot) => {
       querySnapshot.forEach(function(doc) {
           const max = doc.data().maxSup
@@ -102,3 +80,51 @@ exports.regenerateSups = functions.pubsub.schedule('every 24 hours').onRun((cont
 
   return null;
 });
+
+function addRecScore(rec:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>) {
+  admin.firestore().runTransaction(async transaction => {
+    const doc = await transaction.get(rec);
+    if(!doc.exists){
+         throw "Document does not exist";
+    }
+    const newScore = doc?.data()?.score + 1;
+    transaction.update(rec, {
+        score: newScore,
+    });
+    console.log("Score updated");
+  })
+  .catch(error => {
+    console.log(error);
+    return null;
+  });
+}
+
+function addSenderScore(sender:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>) {
+  admin.firestore().runTransaction(async transaction => {
+    const doc = await transaction.get(sender);
+    if(!doc.exists){
+         throw "Document does not exist";
+    }
+    const newScore = doc?.data()?.score + 1;
+    transaction.update(sender, {
+        score: newScore,
+    });
+    console.log("Score updated");
+  });
+}
+
+function decSenderCount(sender:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>) {
+  admin.firestore().runTransaction(async transaction => {
+    const doc = await transaction.get(sender);
+    if(!doc.exists){
+         throw "Document does not exist";
+    }
+    const newCount = doc?.data()?.sendCount - 1;
+    if (!(newCount < 0)) {
+      transaction.update(sender, {
+        sendCount: newCount,
+      });
+    }
+    console.log("Count updated");
+  });
+}
