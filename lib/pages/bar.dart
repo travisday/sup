@@ -14,7 +14,7 @@ class Bar extends StatelessWidget {
   User me = auth.getCurrentUser();
 
   Widget _buildHeader(BuildContext context) {
-    if (me.lastOnline.difference(DateTime.now()).inDays == 1) {
+    if (me.lastOnline.difference(DateTime.now()).inDays == 1 && me.streak < 7) {
       userService.updateStreak(me);
     }
 

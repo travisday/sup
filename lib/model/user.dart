@@ -4,7 +4,7 @@ class User {
   String uid;
   String name;
   String email;
-  int score;
+  double score;
   int sendCount;
   int maxSup;
   int streak;

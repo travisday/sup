@@ -2,6 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 admin.initializeApp();
 
+const mods = [.1, .12, .14, .16, .18, .2, .22];
 
 exports.sendMessage = functions.https.onCall(
   async ({ idTo, idFrom }: { idTo?: string; idFrom: string }) => {
@@ -87,7 +88,15 @@ function addRecScore(rec:FirebaseFirestore.DocumentReference<FirebaseFirestore.D
     if(!doc.exists){
          throw "Document does not exist";
     }
-    const newScore = doc?.data()?.score + 1;
+    var newScore = 0;
+    if (doc?.data()?.score < 10) {
+      newScore = doc?.data()?.score + 1;
+    } else {
+      newScore = doc?.data()?.score + .3;
+    }
+    if (doc?.data()?.streak > 0){
+      newScore += mods[doc?.data()?.streak - 1];
+    }
     transaction.update(rec, {
         score: newScore,
     });
@@ -105,7 +114,16 @@ function addSenderScore(sender:FirebaseFirestore.DocumentReference<FirebaseFires
     if(!doc.exists){
          throw "Document does not exist";
     }
-    const newScore = doc?.data()?.score + 1;
+    var newScore = 0;
+    if (doc?.data()?.score < 10) {
+      newScore = doc?.data()?.score + 1;
+    } else {
+      newScore = doc?.data()?.score + .1;
+    }
+    
+    if (doc?.data()?.streak > 0){
+      newScore += mods[doc?.data()?.streak - 1];
+    }
     transaction.update(sender, {
         score: newScore,
     });

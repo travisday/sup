@@ -41,7 +41,8 @@ class _UserList extends State<UserList> {
         children: <Widget>[
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Icon(Icons.star, color: Colors.amberAccent),
-            Text("${me.score}", style: TextStyle(fontSize: 24))
+            Text("${me.score.toStringAsFixed(2)}",
+                style: TextStyle(fontSize: 24))
           ]),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             FaIcon(FontAwesomeIcons.handPeace, color: Colors.amberAccent),
@@ -95,10 +96,10 @@ class _UserList extends State<UserList> {
                               Row(
                                 children: [
                                   Icon(Icons.star,
-                                      size: 24, color: Colors.amberAccent),
+                                      size: 20, color: Colors.amberAccent),
                                   Text(
-                                    "${user.score}",
-                                    style: TextStyle(fontSize: 24),
+                                    "${user.score.toStringAsFixed(2)}",
+                                    style: TextStyle(fontSize: 20),
                                   )
                                 ],
                               )
