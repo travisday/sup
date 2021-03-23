@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sup/api/auth.dart';
 import 'package:sup/pages/login.dart';
 import 'package:sup/provider/users_provider.dart';
+import 'package:sup/api/push_notifications.dart';
 import 'package:sup/provider/theme_provider.dart';
 import 'package:sup/provider/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,9 @@ class MyApp extends StatelessWidget {
   Widget _getFirstRoute(BuildContext context) {
     var state = Provider.of<AuthState>(context);
 
-    if (state is LoggedIn)
+    if (state is LoggedIn) {
+      PushNotificationsManager pushy = PushNotificationsManager();
+      pushy.init();
       return MultiProvider(providers: [
         StreamProvider<List<User>>.value(
           value: userService.friendsList(),
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
           lazy: true,
         )
       ], child: FancyDrawer());
+    }
 
     if (state is LoggedOut) return LoginPage();
 

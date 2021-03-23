@@ -15,7 +15,7 @@ class User {
       {this.uid,
       this.name,
       this.email,
-      this.score = 0,
+      this.score,
       this.sendCount,
       this.maxSup,
       this.lastOnline,
@@ -28,11 +28,10 @@ class User {
         uid: doc.documentID,
         name: data['name'],
         email: data['email'],
-        score: data['score'] ?? 0,
+        score: data['score'] + .0 ?? 0.0,
         sendCount: data['sendCount'] ?? 5,
         maxSup: data['maxSup'] ?? 5,
-        lastOnline:
-            (data['lastOnline'] as Timestamp).toDate() ?? DateTime.now(),
+        lastOnline: data['lastOnline'].toDate() ?? DateTime.now(),
         streak: data['streak'] ?? 0,
         favUsers: List.from(data['favUsers']));
   }

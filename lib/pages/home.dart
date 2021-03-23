@@ -62,6 +62,7 @@ class _UserList extends State<UserList> {
 
   Widget _buildRow(User user, User me) {
     bool isFav = me.favUsers.contains(user.uid);
+    double bitch = 1.22;
 
     return Container(
         height: 120,
@@ -98,6 +99,7 @@ class _UserList extends State<UserList> {
                                   Icon(Icons.star,
                                       size: 20, color: Colors.amberAccent),
                                   Text(
+                                    //"${bitch.toStringAsFixed(2)}",
                                     "${user.score.toStringAsFixed(2)}",
                                     style: TextStyle(fontSize: 20),
                                   )

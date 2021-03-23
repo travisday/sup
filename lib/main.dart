@@ -19,8 +19,6 @@ Future<void> main() async {
     ),
   );
   Firestore(app: app);
-  PushNotificationsManager pushy = PushNotificationsManager();
-  pushy.init();
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   runApp(ChangeNotifierProvider<ThemeProvider>(

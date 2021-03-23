@@ -40,6 +40,12 @@ class AuthService {
           await ref.setData({
             if (u.displayName != null) 'name': u.displayName,
             'email': u.email,
+            'maxSup': 20,
+            'score': 0,
+            'sendCount': 20,
+            'streak': 0,
+            'favUsers': [],
+            'lastOnline': DateTime.now()
           });
           snap = await ref.get();
         }
@@ -69,7 +75,15 @@ class AuthService {
     DocumentReference ref =
         Firestore.instance.collection('users').document(u.uid);
     DocumentSnapshot snap = await ref.get();
-    await ref.setData({'name': displayName}, merge: true);
+    await ref.setData({
+      'name': displayName,
+      'maxSup': 20,
+      'score': 0,
+      'sendCount': 20,
+      'streak': 0,
+      'favUsers': [],
+      'lastOnline': DateTime.now()
+    }, merge: true);
     snap = await ref.get();
 
     User user = User.fromFirestore(snap);
