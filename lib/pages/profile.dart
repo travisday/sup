@@ -32,14 +32,16 @@ class Profile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 ListTile(
-                  title: Text(text),
+                  title: Text(text,
+                      style:
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                 ),
                 FlatButton(
-                  child: Text('Log Out'),
+                  child: Text('Log Out', style: TextStyle(fontSize: 18)),
                   onPressed: FirebaseAuth.instance.signOut,
                 ),
                 FlatButton(
-                  child: Text('Switch Theme'),
+                  child: Text('Switch Theme', style: TextStyle(fontSize: 18)),
                   onPressed: () {
                     Provider.of<ThemeProvider>(context, listen: false)
                         .switchTheme();

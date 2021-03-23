@@ -3,18 +3,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum MyThemes { light, dark }
 
-var primaryPurple = Color(0xFF6B64A8);
-var purple = MaterialColor(0xFF6B64A8, {
-  50: Color(0xFFedecf5),
-  100: Color(0xFFd3d1e5),
-  200: Color(0xFFb5b2d4),
-  300: Color(0xFF9793c2),
-  400: Color(0xFF817bb5),
-  500: Color(0xFF6b64a8),
-  600: Color(0xFF635ca0),
-  700: Color(0xFF585297),
-  800: Color(0xFF4e488d),
-  900: Color(0xFF3c367d),
+var primaryYellow = Colors.amberAccent;
+var yellow = MaterialColor(0xFFFFD740, {
+  50: Colors.amberAccent[50],
+  100: Colors.amberAccent[100],
+  200: Colors.amberAccent[200],
+  300: Colors.amberAccent[300],
+  400: Colors.amberAccent[400],
+  500: Colors.amberAccent[500],
+  600: Colors.amberAccent[600],
+  700: Colors.amberAccent[700],
+  800: Colors.amberAccent[800],
+  900: Colors.amberAccent[900],
 });
 
 var darkBG = Color(0xFF252529);
@@ -37,8 +37,8 @@ var ltt = ThemeData.light();
 var darkTheme = ThemeData(
   primaryColorBrightness: Brightness.dark,
   brightness: Brightness.dark,
-  primaryColor: Colors.deepPurple[200],
-  backgroundColor: dark[800],
+  primaryColor: Colors.amberAccent,
+  backgroundColor: dark[600],
   accentColor: Colors.pinkAccent[200],
   canvasColor: dark[700],
   textTheme: ddt.textTheme.copyWith(
@@ -47,7 +47,7 @@ var darkTheme = ThemeData(
   ),
   chipTheme: ddt.chipTheme.copyWith(
     backgroundColor: dark[600],
-    secondarySelectedColor: Colors.deepPurple[200],
+    secondarySelectedColor: Colors.amberAccent,
     selectedColor: Colors.pinkAccent,
     secondaryLabelStyle: ddt.chipTheme.secondaryLabelStyle.copyWith(
       color: Colors.white,
@@ -57,16 +57,16 @@ var darkTheme = ThemeData(
 
 var lightTheme = ThemeData(
   brightness: Brightness.light,
-  primaryColor: Color(0xFF6B64A8),
+  primaryColor: Colors.amberAccent,
   accentColor: Colors.pinkAccent,
   canvasColor: Color(0xFFF2F2F7),
-  backgroundColor: Color(0xFF6B64A8),
+  backgroundColor: Colors.blue[100],
   textTheme: ltt.textTheme.copyWith(
     bodyText2: ltt.textTheme.bodyText2.copyWith(fontSize: 16.0),
     bodyText1: ltt.textTheme.bodyText2.copyWith(fontSize: 16.0),
   ),
   chipTheme: ltt.chipTheme.copyWith(
-    secondarySelectedColor: Color(0xFF6B64A8),
+    secondarySelectedColor: Colors.amberAccent,
     selectedColor: Colors.pinkAccent,
     secondaryLabelStyle: ltt.chipTheme.secondaryLabelStyle.copyWith(
       color: Colors.white,

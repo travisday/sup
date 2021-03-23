@@ -5,7 +5,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-Color yellow = const Color(0xfece2fff);
+// yellow = const Color(0xfece2fff);
 
 class Home extends StatelessWidget {
   @override
@@ -62,7 +62,6 @@ class _UserList extends State<UserList> {
 
   Widget _buildRow(User user, User me) {
     bool isFav = me.favUsers.contains(user.uid);
-    double bitch = 1.22;
 
     return Container(
         height: 120,
@@ -77,8 +76,8 @@ class _UserList extends State<UserList> {
                       children: [
                         //Icon(Icons.person, size: 60),
                         CircleAvatar(
-                            backgroundImage:
-                                NetworkImage('https://robohash.org/.png'),
+                            backgroundImage: NetworkImage(
+                                'https://robohash.org/{$user.id}.png?set=set1?bgset=bg3'),
                             radius: 50)
                       ])),
               Expanded(
