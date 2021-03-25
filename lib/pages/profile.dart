@@ -4,8 +4,29 @@ import 'package:sup/api/auth.dart';
 import 'package:sup/model/user.dart';
 import 'package:sup/provider/theme_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:sup/api/user_service.dart';
+import 'dart:io';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  _Profile createState() => _Profile();
+}
+
+class _Profile extends State<Profile> {
+  File _image;
+  final picker = ImagePicker();
+
+  Future<void> _openImagePicker() async {
+    final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      setState(() {
+        _image = File(pickedImage.path);
+      });
+      //userService.uploadFile(_image);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<AuthState>(context).user;
@@ -36,9 +57,21 @@ class Profile extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
                 ),
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 4, 0, 15),
+                    child: CircleAvatar(
+                        backgroundImage: (_image != null)
+                            ? Image.file(
+                                _image,
+                                fit: BoxFit.cover,
+                              ).image
+                            : NetworkImage(
+                                'https://robohash.org/{$user.id}.png?set=set1?bgset=bg3'),
+                        radius: 80)),
                 FlatButton(
-                  child: Text('Log Out', style: TextStyle(fontSize: 18)),
-                  onPressed: FirebaseAuth.instance.signOut,
+                  child: Text('Update Profile Pic',
+                      style: TextStyle(fontSize: 18)),
+                  onPressed: _openImagePicker,
                 ),
                 FlatButton(
                   child: Text('Switch Theme', style: TextStyle(fontSize: 18)),
@@ -46,6 +79,10 @@ class Profile extends StatelessWidget {
                     Provider.of<ThemeProvider>(context, listen: false)
                         .switchTheme();
                   },
+                ),
+                FlatButton(
+                  child: Text('Log Out', style: TextStyle(fontSize: 18)),
+                  onPressed: FirebaseAuth.instance.signOut,
                 ),
               ],
             ),

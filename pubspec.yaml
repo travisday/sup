@@ -42,6 +42,7 @@ dependencies:
   shared_preferences:
   flutter_launcher_icons: "^0.7.3"
   font_awesome_flutter: ^8.11.0
+  image_picker: ^0.6.7+22
   share:
 
 dependency_overrides:
