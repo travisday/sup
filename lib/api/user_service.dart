@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:sup/api/auth.dart';
 import 'package:sup/model/user.dart';
+import 'package:path/path.dart';
+import 'dart:io';
 
 class UserService {
   final Firestore _db;
@@ -70,6 +73,26 @@ class UserService {
         .collection('users')
         .document((await FirebaseAuth.instance.currentUser()).uid)
         .updateData({'pushToken': token});
+  }
+
+  addProfilePic(String fileURL) async {
+    User me = auth.getCurrentUser();
+    Firestore.instance
+        .collection('users')
+        .document(me.uid)
+        .setData({"profilePic": fileURL}, merge: true);
+  }
+
+  Future uploadFile(File _image) async {
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('profile_pic/${basename(_image.path)}}');
+    StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    storageReference.getDownloadURL().then((fileURL) {
+      addProfilePic(fileURL);
+    });
   }
 }
 

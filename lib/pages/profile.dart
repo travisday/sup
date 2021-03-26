@@ -23,13 +23,22 @@ class _Profile extends State<Profile> {
       setState(() {
         _image = File(pickedImage.path);
       });
-      //userService.uploadFile(_image);
+      userService.uploadFile(_image).then((fileURL) {
+        userService.addProfilePic(fileURL);
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     User user = Provider.of<AuthState>(context).user;
+    String profilePic;
+
+    if (user.profilePic.isEmpty) {
+      profilePic = "https://robohash.org/{$user.id}.png?set=set1?bgset=bg3";
+    } else {
+      profilePic = user.profilePic;
+    }
 
     var text;
     if (user == null)
@@ -65,8 +74,7 @@ class _Profile extends State<Profile> {
                                 _image,
                                 fit: BoxFit.cover,
                               ).image
-                            : NetworkImage(
-                                'https://robohash.org/{$user.id}.png?set=set1?bgset=bg3'),
+                            : NetworkImage(profilePic),
                         radius: 80)),
                 FlatButton(
                   child: Text('Update Profile Pic',

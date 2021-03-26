@@ -76,8 +76,10 @@ class _UserList extends State<UserList> {
                       children: [
                         //Icon(Icons.person, size: 60),
                         CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                'https://robohash.org/{$user.id}.png?set=set1?bgset=bg3'),
+                            backgroundImage: (user.profilePic.isEmpty)
+                                ? NetworkImage(
+                                    'https://robohash.org/{$user.id}.png?set=set1?bgset=bg3')
+                                : NetworkImage(user.profilePic),
                             radius: 50)
                       ])),
               Expanded(

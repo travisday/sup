@@ -4,6 +4,7 @@ class User {
   String uid;
   String name;
   String email;
+  String profilePic;
   double score;
   int sendCount;
   int maxSup;
@@ -15,6 +16,7 @@ class User {
       {this.uid,
       this.name,
       this.email,
+      this.profilePic,
       this.score,
       this.sendCount,
       this.maxSup,
@@ -28,6 +30,7 @@ class User {
         uid: doc.documentID,
         name: data['name'],
         email: data['email'],
+        profilePic: data['profilePic'] ?? "",
         score: data['score'] + .0 ?? 0.0,
         sendCount: data['sendCount'] ?? 5,
         maxSup: data['maxSup'] ?? 5,
