@@ -66,6 +66,72 @@ class _UserList extends State<UserList> {
   Widget _buildRow(User user, User me) {
     bool isFav = me.favUsers.contains(user.uid);
 
+    fav() {
+      if (isFav) {
+        print('removed');
+
+        userService.removeFavUser(me, user);
+      } else {
+        print('added');
+
+        userService.addFavUser(me, user);
+      }
+    }
+
+    send() {
+      if (me.sendCount > 0) {
+        var sendMessage = CloudFunctions.instance.getHttpsCallable(
+          functionName: "sendMessage",
+        )..timeout = const Duration(seconds: 30);
+        sendMessage.call({"idTo": user.uid, "idFrom": me.uid});
+        SnackBar bar = SnackBar(
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 3),
+          action: SnackBarAction(
+            label: "Close",
+            textColor: Colors.redAccent,
+            onPressed: () => Scaffold.of(context).hideCurrentSnackBar(),
+          ),
+          content: Padding(
+            padding: const EdgeInsets.only(bottom: 25.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("sup sent to ${user.name}"),
+              ],
+            ),
+          ),
+        );
+        Scaffold.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(bar);
+      } else {
+        SnackBar bar = SnackBar(
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 10),
+          action: SnackBarAction(
+            label: "Close",
+            textColor: Colors.redAccent,
+            onPressed: () => Scaffold.of(context).hideCurrentSnackBar(),
+          ),
+          content: Padding(
+            padding: const EdgeInsets.only(bottom: 25.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text("no more sups :("),
+              ],
+            ),
+          ),
+        );
+        Scaffold.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(bar);
+      }
+    }
+
     return Container(
         height: 120,
         child: Card(
@@ -87,17 +153,19 @@ class _UserList extends State<UserList> {
                       ])),
               Expanded(
                   flex: 66,
-                  child: Row(children: [
-                    Expanded(
-                        flex: 33,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(children: [
+                          Text("${user.name}",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                        ]),
+                        Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text("${user.name}",
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold)),
                               Row(
                                 children: [
                                   Icon(Icons.star,
@@ -108,14 +176,11 @@ class _UserList extends State<UserList> {
                                     style: TextStyle(fontSize: 20),
                                   )
                                 ],
-                              )
-                            ])),
-                    Expanded(
-                        flex: 66,
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
+                              ),
+                              SizedBox(
+                                //Use of SizedBox
+                                width: 30,
+                              ),
                               IconButton(
                                 icon: Icon(
                                   isFav
@@ -125,16 +190,12 @@ class _UserList extends State<UserList> {
                                   size: 50,
                                 ),
                                 onPressed: () {
-                                  if (isFav) {
-                                    print('removed');
-
-                                    userService.removeFavUser(me, user);
-                                  } else {
-                                    print('added');
-
-                                    userService.addFavUser(me, user);
-                                  }
+                                  fav();
                                 },
+                              ),
+                              SizedBox(
+                                //Use of SizedBox
+                                width: 20,
                               ),
                               IconButton(
                                   icon: FaIcon(
@@ -143,68 +204,22 @@ class _UserList extends State<UserList> {
                                     size: 50,
                                   ),
                                   onPressed: () {
-                                    if (me.sendCount > 0) {
-                                      var sendMessage = CloudFunctions.instance
-                                          .getHttpsCallable(
-                                        functionName: "sendMessage",
-                                      )..timeout = const Duration(seconds: 30);
-                                      sendMessage.call(
-                                          {"idTo": user.uid, "idFrom": me.uid});
-                                      SnackBar bar = SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        duration: Duration(seconds: 3),
-                                        action: SnackBarAction(
-                                          label: "Close",
-                                          textColor: Colors.redAccent,
-                                          onPressed: () => Scaffold.of(context)
-                                              .hideCurrentSnackBar(),
-                                        ),
-                                        content: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 25.0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text("sup sent to ${user.name}"),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                      Scaffold.of(context)
-                                        ..hideCurrentSnackBar()
-                                        ..showSnackBar(bar);
-                                    } else {
-                                      SnackBar bar = SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        duration: Duration(seconds: 10),
-                                        action: SnackBarAction(
-                                          label: "Close",
-                                          textColor: Colors.redAccent,
-                                          onPressed: () => Scaffold.of(context)
-                                              .hideCurrentSnackBar(),
-                                        ),
-                                        content: Padding(
-                                          padding: const EdgeInsets.only(
-                                              bottom: 25.0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text("no more sups :("),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                      Scaffold.of(context)
-                                        ..hideCurrentSnackBar()
-                                        ..showSnackBar(bar);
-                                    }
+                                    send();
                                   }),
-                            ]))
-                  ])),
+                            ])
+                      ])),
             ])));
   }
 }
+
+// Row(
+//   children: [
+//     Icon(Icons.star,
+//         size: 20, color: Colors.amberAccent),
+//     Text(
+//       //"${bitch.toStringAsFixed(2)}",
+//       "${user.score.toStringAsFixed(2)}",
+//       style: TextStyle(fontSize: 20),
+//     )
+//   ],
+// )
