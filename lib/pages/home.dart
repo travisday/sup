@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:sup/api/user_service.dart';
 import 'package:sup/model/user.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,7 @@ class _UserList extends State<UserList> {
   Widget build(BuildContext context) {
     var users = Provider.of<List<User>>(context);
     var me = Provider.of<User>(context);
+    //var me = userService.me();
     if (users == null) return Text("null");
     //userService.updateLastOnline(me);
     var sorted = users

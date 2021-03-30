@@ -33,6 +33,16 @@ class UserService {
         .map((doc) => User.fromFirestore(doc));
   }
 
+  double getSendCount(User user) {
+    var data;
+    var doc = Firestore.instance.collection('users').document(user.uid);
+    doc.get().then((snap) {
+      data = snap.data;
+    });
+
+    return data["sendCount"];
+  }
+
   addToScore(User user) async {
     Firestore.instance
         .collection('users')
@@ -77,10 +87,21 @@ class UserService {
 
   addProfilePic(String fileURL) async {
     User me = auth.getCurrentUser();
-    Firestore.instance
-        .collection('users')
-        .document(me.uid)
-        .setData({"profilePic": fileURL}, merge: true);
+    deleteImage(me.profilePic).then((_) {
+      Firestore.instance
+          .collection('users')
+          .document(me.uid)
+          .setData({"profilePic": fileURL}, merge: true);
+    });
+  }
+
+  Future<void> deleteImage(String imageFileUrl) async {
+    var fileUrl = Uri.decodeFull(basename(imageFileUrl))
+        .replaceAll(new RegExp(r'(\?alt).*'), '');
+
+    final StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child(fileUrl);
+    await firebaseStorageRef.delete();
   }
 
   Future uploadFile(File _image) async {
