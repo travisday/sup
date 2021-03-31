@@ -19,7 +19,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     increment_build_number(xcodeproj: "Runner.xcodeproj")
-    # commit_version_bump
+    commit_version_bump
     build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
     upload_to_testflight
   end
