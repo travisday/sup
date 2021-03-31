@@ -1,3 +1,6 @@
+.env
+*.ipa
+Runner.app.*.zip
 *.mode1v3
 *.mode2v3
 *.moved-aside
@@ -25,6 +28,18 @@ Flutter/flutter_export_environment.sh
 ServiceDefinitions.json
 Runner/GeneratedPluginRegistrant.*
 Flutter/.last_build_id
+
+# fastlane specific
+**/fastlane/report.xml
+
+# deliver temporary files
+**/fastlane/Preview.html
+
+# snapshot generated screenshots
+**/fastlane/screenshots
+
+# scan temporary files
+**/fastlane/test_output
 
 # Exceptions to above rules.
 !default.mode1v3
