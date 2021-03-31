@@ -5,7 +5,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- beta
 
 pool:
   vmImage: ubuntu-latest
