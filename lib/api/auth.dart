@@ -40,6 +40,7 @@ class AuthService {
           await ref.setData({
             if (u.displayName != null) 'name': u.displayName,
             'email': u.email,
+            'profilePic': "",
             'maxSup': 20,
             'score': 0,
             'sendCount': 20,
@@ -77,6 +78,7 @@ class AuthService {
     DocumentSnapshot snap = await ref.get();
     await ref.setData({
       'name': displayName,
+      'profilePic': "",
       'maxSup': 20,
       'score': 0,
       'sendCount': 20,

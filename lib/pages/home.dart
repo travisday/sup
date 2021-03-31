@@ -65,6 +65,8 @@ class _UserList extends State<UserList> {
 
   Widget _buildRow(User user, User me) {
     bool isFav = me.favUsers.contains(user.uid);
+    final id = user.uid;
+    final defaultURL = "https://robohash.org/$id.png?set=set1?bgset=bg3";
 
     fav() {
       if (isFav) {
@@ -132,6 +134,7 @@ class _UserList extends State<UserList> {
       }
     }
 
+//https://robohash.org/{$user.id}.png?set=set1?bgset=bg3'
     return Container(
         height: 120,
         child: Card(
@@ -146,8 +149,7 @@ class _UserList extends State<UserList> {
                         //Icon(Icons.person, size: 60),
                         CircleAvatar(
                             backgroundImage: (user.profilePic.isEmpty)
-                                ? NetworkImage(
-                                    'https://robohash.org/{$user.id}.png?set=set1?bgset=bg3')
+                                ? NetworkImage(defaultURL)
                                 : NetworkImage(user.profilePic),
                             radius: 50)
                       ])),
