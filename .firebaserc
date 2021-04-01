@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "sup-f0bc0"
+    "default": "sup-f0bc0",
+    "development": "sup-development-2085b"
   }
 }
