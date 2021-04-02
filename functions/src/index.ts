@@ -1,14 +1,14 @@
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-admin.initializeApp();
+import { setScore } from './db/setScore';
+import { admin, functions } from './services';
 
-const mods = [0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.22];
+// const mods = [0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.22];
 
-exports.sendMessage = functions.https.onCall(
+export const sendMessage = functions.https.onCall(
   async ({ idTo, idFrom }: { idTo?: string; idFrom: string }) => {
-    console.log('----------------start function--------------------');
+    // console.log('----------------start function--------------------');
     console.log(idTo, idFrom);
-    if (!idTo || !idFrom) return;
+    if (!idTo || !idFrom)
+      return console.log(`parameters not supplied, to: ${idTo} from ${idFrom}`);
     // Get push token user to (receive)
     const userToSnap = await admin
       .firestore()
@@ -17,10 +17,10 @@ exports.sendMessage = functions.https.onCall(
       .get();
 
     const userTo = userToSnap.data();
-    if (!userTo) return;
+    if (!userTo) return console.log(`user ${idTo} does not exist`);
     console.log(`Found user to: ${userTo.name}`);
     if (!userTo.pushToken) {
-      console.log('Can not find pushToken target user');
+      console.log('no pushToken for target user');
       return;
     }
     // Get info user from (sent)
@@ -32,12 +32,9 @@ exports.sendMessage = functions.https.onCall(
       .get();
 
     const userFrom = userFromSnap.data();
-    if (!userFrom) return;
+    if (!userFrom) return console.log(`user ${idFrom} does not exist`);
     console.log(`Found user from: ${userFrom.name}`);
-    if (!userFrom.pushToken) {
-      console.log('Can not find pushToken target user');
-      return;
-    }
+
     const payload: admin.messaging.MessagingPayload = {
       notification: {
         from: idFrom,
@@ -61,18 +58,20 @@ exports.sendMessage = functions.https.onCall(
       .sendToDevice(userTo.pushToken, payload)
       .then(response => {
         console.log('Successfully sent message:', response);
-      })
-      .then(() => addRecScore(rec))
-      .then(() => decSenderCount(sender))
-      .then(() => addSenderScore(sender))
-      .catch(error => {
-        console.log('Error sending message:', error);
       });
+
+    const p1 = addRecScore(rec);
+    const p2 = decSenderCount(sender);
+    const p3 = addSenderScore(sender);
+
+    await Promise.all([p1, p2, p3]).catch(error => {
+      console.log('Error sending message:', error);
+    });
     return null;
   }
 );
 
-exports.regenerateSups = functions.pubsub
+export const regenerateSups = functions.pubsub
   .schedule('every 24 hours')
   .onRun(() => {
     admin
@@ -94,60 +93,31 @@ exports.regenerateSups = functions.pubsub
     return null;
   });
 
-function addRecScore(
-  rec: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-) {
-  admin
-    .firestore()
-    .runTransaction(async transaction => {
-      const doc = await transaction.get(rec);
-      if (!doc.exists) {
-        throw 'Document does not exist';
-      }
-      var newScore = 0;
-      if (doc?.data()?.score < 10) {
-        newScore = doc?.data()?.score + 1;
-      } else {
-        newScore = doc?.data()?.score + 0.3;
-      }
-      if (doc?.data()?.streak > 0) {
-        newScore += mods[doc?.data()?.streak - 1];
-      }
-      transaction.update(rec, {
-        score: newScore,
-      });
-      console.log('Score updated');
-    })
-    .catch(error => {
-      console.log(error);
-      return null;
+const addRecScore = async (rec: FirebaseFirestore.DocumentReference) => {
+  try {
+    return setScore(rec, current => {
+      if (current < 10) return current + 1;
+      return current + 0.3;
     });
-}
+  } catch (e) {
+    console.error(`error adding receiver score`);
+    console.error(e);
+    return null;
+  }
+};
 
-function addSenderScore(
-  sender: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-) {
-  admin.firestore().runTransaction(async transaction => {
-    const doc = await transaction.get(sender);
-    if (!doc.exists) {
-      throw 'Document does not exist';
-    }
-    var newScore = 0;
-    if (doc?.data()?.score < 10) {
-      newScore = doc?.data()?.score + 1;
-    } else {
-      newScore = doc?.data()?.score + 0.1;
-    }
-
-    if (doc?.data()?.streak > 0) {
-      newScore += mods[doc?.data()?.streak - 1];
-    }
-    transaction.update(sender, {
-      score: newScore,
+const addSenderScore = async (sender: FirebaseFirestore.DocumentReference) => {
+  try {
+    return setScore(sender, current => {
+      if (current < 10) return current + 1;
+      return current + 0.1;
     });
-    console.log('Score updated');
-  });
-}
+  } catch (e) {
+    console.error(`error adding sender score`);
+    console.error(e);
+    return null;
+  }
+};
 
 function decSenderCount(
   sender: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
