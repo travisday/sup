@@ -53,7 +53,7 @@ class _FirebaseMessageWrapperState extends State<FirebaseMessageWrapper> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(message["gcm.notification.name"]),
+            Text(message["gcm.notification.name"] ?? 'someone'),
             Text("sup"),
           ],
         ),

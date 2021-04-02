@@ -1,0 +1,32 @@
+{
+  "configurations": [
+    {
+      "name": "sup (prod)",
+      "program": "lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--flavor", "prod"]
+    },
+    {
+      "name": "sup (dev)",
+      "program": "lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": ["--flavor", "dev"]
+    },
+    {
+      "name": "sup (dev + emulators)",
+      "program": "lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "args": [
+        "--flavor",
+        "dev",
+        "--dart-define",
+        "FIREBASE_EMULATOR=TRUE",
+        "--dart-define",
+        "MY_OTHER_VAR=MY_OTHER_VALUE"
+      ]
+    }
+  ]
+}
