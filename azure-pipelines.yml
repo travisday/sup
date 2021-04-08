@@ -5,14 +5,49 @@
 # https://aka.ms/yaml
 
 trigger:
-- beta
+- master
 
 # https://docs.microsoft.com/azure/devops/pipelines/ecosystems/xcode
 pool:
   vmImage: 'macOS-10.14'
 
-
+# The `certSecureFile` and `provProfileSecureFile` files are uploaded to the Azure Pipelines secure files library where they are encrypted.
+# The `P12Password` variable is set in the Azure Pipelines pipeline editor and marked 'secret' to be encrypted.
 steps:
+- task: InstallAppleCertificate@2
+  inputs:
+    certSecureFile: 'ta_iosDev_cert.p12'
+    certPwd: $(P12Password)
+
+- task: InstallAppleProvisioningProfile@1
+  inputs:
+    provProfileSecureFile: 'SUP_IOS_app_development_profile_TATD_iPhones.mobileprovision'
+
+- task: CocoaPods@0
+  inputs:
+    workingDirectory: 'ios'
+    forceRepoUpdate: false
+
+
+- task: Xcode@5
+  displayName: Build Release-dev configuration
+  inputs:
+    actions: 'build'
+    scheme: ''
+    sdk: 'iphoneos'
+    configuration: 'Release-dev'
+    xcWorkspacePath: '**/*.xcodeproj/project.xcworkspace'
+    xcodeVersion: 'default' # Options: 8, 9, 10, default, specifyPath
+    signingOption: 'default' # Options: nosign, default, manual, auto
+    useXcpretty: false # Makes it easier to diagnose build failures
+
+
+- task: CopyFiles@2
+  inputs:
+    contents: '**/*.ipa'
+    targetFolder: '$(build.artifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
+
 - task: AppStoreRelease@1
   inputs:
     authType: 'UserAndPass'
