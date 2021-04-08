@@ -21,7 +21,7 @@ steps:
 
 - task: InstallAppleProvisioningProfile@1
   inputs:
-    provProfileSecureFile: '54f1f172-6f8e-4bfb-9e0b-6ad9dda40b4e.mobileprovision'
+    provProfileSecureFile: 'e95de1af-cc8e-4124-baca-e72682f1c6ef.mobileprovision'
 
 - task: FlutterInstall@0
   inputs:
