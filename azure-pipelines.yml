@@ -7,8 +7,10 @@
 trigger:
 - beta
 
+# https://docs.microsoft.com/azure/devops/pipelines/ecosystems/xcode
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'macOS-10.14'
+
 
 steps:
 - task: AppStoreRelease@1
