@@ -28,15 +28,24 @@ steps:
     channel: 'stable'
     version: 'latest'
 
-- task: FlutterCommand@0
+- task: CmdLine@2
+  displayName: Run install
   inputs:
-    arguments: 'pub get'
+    script: |
+      $(FlutterToolPath)/flutter pub get
+
 - task: CocoaPods@0
   inputs:
     workingDirectory: 'ios'
     forceRepoUpdate: false
 
-
+- task: FlutterBuild@0
+  displayName: 'Build IOS'
+  inputs:
+    target: "ios"
+    buildFlavour: "dev"
+    buildNumber: '$(Build.BuildNumber)'
+    buildName: $(buildName)
 - task: Xcode@5
   displayName: Build Release-dev configuration
   inputs:
