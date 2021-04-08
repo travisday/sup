@@ -23,6 +23,14 @@ steps:
   inputs:
     provProfileSecureFile: 'SUP_IOS_app_development_profile_TATD_iPhones.mobileprovision'
 
+- task: FlutterInstall@0
+  inputs:
+    channel: 'stable'
+    version: 'latest'
+
+- task: FlutterCommand@0
+  inputs:
+    arguments: 'pub get'
 - task: CocoaPods@0
   inputs:
     workingDirectory: 'ios'
