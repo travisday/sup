@@ -53,12 +53,6 @@ export const sendMessage = functions.https.onCall(
       .collection('users')
       .doc(idFrom);
     // Let push to the target device
-    await admin
-      .messaging()
-      .sendToDevice(userTo.pushToken, payload)
-      .then(response => {
-        console.log('Successfully sent message:', response);
-      });
 
     const p1 = addRecScore(rec);
     const p2 = decSenderCount(sender);
@@ -67,6 +61,12 @@ export const sendMessage = functions.https.onCall(
     await Promise.all([p1, p2, p3]).catch(error => {
       console.log('Error sending message:', error);
     });
+    admin
+      .messaging()
+      .sendToDevice(userTo.pushToken, payload)
+      .then(response => {
+        console.log('Successfully sent message:', response);
+      });
     return null;
   }
 );
