@@ -22,6 +22,7 @@ class UserList extends StatefulWidget {
 }
 
 class _UserList extends State<UserList> {
+  var enable = true;
   @override
   Widget build(BuildContext context) {
     var users = Provider.of<List<User>>(context);
@@ -80,12 +81,18 @@ class _UserList extends State<UserList> {
       }
     }
 
-    send() {
+    send() async {
       if (me.sendCount > 0) {
         var sendMessage = CloudFunctions.instance.getHttpsCallable(
           functionName: "sendMessage",
         )..timeout = const Duration(seconds: 30);
-        sendMessage.call({"idTo": user.uid, "idFrom": me.uid});
+        setState(() {
+          enable = false;
+        });
+        await sendMessage.call({"idTo": user.uid, "idFrom": me.uid});
+        setState(() {
+          enable = true;
+        });
         SnackBar bar = SnackBar(
           behavior: SnackBarBehavior.floating,
           duration: Duration(seconds: 3),
@@ -205,9 +212,11 @@ class _UserList extends State<UserList> {
                                     color: Colors.amberAccent,
                                     size: 50,
                                   ),
-                                  onPressed: () {
-                                    send();
-                                  }),
+                                  onPressed: enable
+                                      ? () {
+                                          send();
+                                        }
+                                      : null),
                             ])
                       ])),
             ])));
