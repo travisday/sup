@@ -44,6 +44,7 @@ export const sendMessage = functions.https.onCall(
         sound: 'default',
       },
     };
+
     var rec = admin
       .firestore()
       .collection('users')
