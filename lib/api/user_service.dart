@@ -83,18 +83,23 @@ class UserService {
         .document(me.uid)
         .setData({"profilePic": fileURL}, merge: true);
 
-    FirebaseStorage.instance.getReferenceFromUrl(oldUrl).then((img) {
-      img.delete().then((res) {
-        print("Deleted!");
+    print("new: $fileURL");
+    print("old: $oldUrl");
+
+    if (oldUrl.isNotEmpty) {
+      FirebaseStorage.instance.getReferenceFromUrl(oldUrl).then((img) {
+        img.delete().then((res) {
+          print("Deleted!");
+        });
+        //print(res.getName());
       });
-      //print(res.getName());
-    });
+    }
   }
 
   Future uploadFile(File _image) async {
-    StorageReference storageReference = FirebaseStorage.instance
-        .ref()
-        .child('profile_pic/${basename(_image.path)}}');
+    var urlName = basename(_image.path);
+    StorageReference storageReference =
+        FirebaseStorage.instance.ref().child("profile_pic/$urlName");
     StorageUploadTask uploadTask = storageReference.putFile(_image);
     await uploadTask.onComplete;
     print('File Uploaded');
