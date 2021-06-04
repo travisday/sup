@@ -8,13 +8,16 @@
 import Foundation
 import SwiftUI
 import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import Combine
 
 class AuthService : ObservableObject {
     var didChange = PassthroughSubject<AuthService, Never>()
     @Published var session: User? { didSet { self.didChange.send(self) }}
     var handle: AuthStateDidChangeListenerHandle?
-
+    let db = Firestore.firestore()
+    
     func listen () {
         // monitor authentication changes using firebase
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
@@ -43,6 +46,23 @@ class AuthService : ObservableObject {
                     else {
                         completion("")
                         // add user to firestore
+                        self.db.collection("users").document(Auth.auth().currentUser!.uid).setData(
+                            [
+                                "name": username,
+                                "email": email,
+                                "pushToken": "",
+                                "score": 0,
+                                "maxSup": 20,
+                                "sendCount": 20,
+                                "profilePic": "",
+                                
+                            ]) { err in
+                                if let err = err {
+                                    print("Error adding document: \(err)")
+                                } else {
+                                    print("User added with ID: \(Auth.auth().currentUser!.uid)")
+                                }
+                            }
                     }
                 }
             }
@@ -58,7 +78,9 @@ class AuthService : ObservableObject {
                 { completion("Account not found. Either your username or password are incorrect")}
                 else { completion(error.localizedDescription) }
             }
-            else { completion("") }
+            else {
+                completion("")
+            }
         }
     }
     

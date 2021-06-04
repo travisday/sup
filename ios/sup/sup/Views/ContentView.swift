@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ContentView: View {
     @EnvironmentObject var auth: AuthService
@@ -23,10 +24,12 @@ struct ContentView: View {
             }
         }.onAppear(perform: getUser)
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+
     }
 }

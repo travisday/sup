@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct Drawer: View {
-    
+
     @State private var action: Int? = 0
     @EnvironmentObject var auth: AuthService
-    
-    
+
+
     var body: some View {
-        
+
         VStack(alignment: .leading) {
-            
+
             HStack {
                 NavigationLink(destination: AccountView(), tag: 1, selection: $action) { EmptyView() }
                 Button(action: {self.action = 1}) {
@@ -30,8 +30,20 @@ struct Drawer: View {
             }.padding(.top, 30)
             
             HStack {
-                NavigationLink(destination: AccountView(), tag: 2, selection: $action) { EmptyView() }
+                NavigationLink(destination: AddFriendsView(), tag: 2, selection: $action) { EmptyView() }
                 Button(action: {self.action = 2}) {
+                    Image(systemName: "person.3.fill")
+                        .foregroundColor(Color(UIConfiguration.buttonColor))
+                        .imageScale(.large)
+                    Text("Add Friends")
+                        .foregroundColor(Color(UIConfiguration.subtitleColor))
+                        .font(.headline)
+                }
+            }.padding(.top, 30)
+
+            HStack {
+                NavigationLink(destination: SettingsView(), tag: 3, selection: $action) { EmptyView() }
+                Button(action: {self.action = 3}) {
                     Image(systemName: "gear")
                         .foregroundColor(Color(UIConfiguration.buttonColor))
                         .imageScale(.large)
@@ -40,7 +52,7 @@ struct Drawer: View {
                         .font(.headline)
                 }
             }.padding(.top, 30)
-            
+
             HStack {
                 Button(action: {auth.signOut()}) {
                     Image(systemName: "arrow.uturn.left.square.fill")
@@ -51,7 +63,7 @@ struct Drawer: View {
                         .font(.headline)
                 }
             }.padding(.top, 30)
-            
+
             Spacer()
         }
     }

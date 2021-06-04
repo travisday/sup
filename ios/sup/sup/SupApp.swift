@@ -10,14 +10,18 @@ import Firebase
 
 @main
 struct SupApp: App {
-    
+        
     init() {
         FirebaseApp.configure()
     }
     
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(AuthService())
+            ContentView()
+                .environmentObject(AuthService())
+                .environmentObject(UserService())
+            
+                
         }
     }
 }

@@ -6,21 +6,30 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct HomeView: View {
+    @ObservedObject private var viewModel: HomeViewModel
+    @EnvironmentObject var userService: UserService
+
     @State var showMenu: Bool = false
     @State var showActivity: Bool = false
-    
+
+    init() {
+        self.viewModel = HomeViewModel()
+    }
+
+
     var body: some View {
         let drag = DragGesture()
                     .onEnded {
-                        if $0.translation.width < -75 {
+                        if $0.translation.width < -100 {
                             withAnimation {
                                 self.showMenu = false
                             }
                         }
                     }
-                
+
         return NavigationView {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
@@ -61,20 +70,25 @@ struct HomeView: View {
                             .foregroundColor(Color(UIConfiguration.buttonColor))
                             .imageScale(.large)})
                 )
-            
+
         }.accentColor(Color(UIConfiguration.subtitleColor))
+        .onAppear {
+            userService.getCurrentUser(documentId: Auth.auth().currentUser!.uid)
+        }
     }
 }
 
 struct MainView: View {
-    
+
     @Binding var showMenu: Bool
-    @EnvironmentObject var auth: AuthService
-    
+    @EnvironmentObject var userService: UserService
+
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Hello user!")
+            ScrollView {
+                VStack {
+                    CardView().padding()
+                }
             }
         }
     }

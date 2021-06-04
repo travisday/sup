@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct AccountView: View {
+    @EnvironmentObject var userService: UserService
+    
     var body: some View {
         NavigationView {
-            Text("profile info")
+            Text("poo: \(userService.user?.email ?? " pee")")
             
         }.navigationBarTitle("Profile", displayMode: .inline)
     }
