@@ -11,6 +11,8 @@ target 'sup' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
+  pod 'Firebase/Messaging'
+  pod 'Firebase/Functions'
 
 
   target 'supTests' do

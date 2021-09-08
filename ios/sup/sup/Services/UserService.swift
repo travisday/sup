@@ -10,6 +10,7 @@ import FirebaseFirestore
 import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestoreSwift
+import FirebaseMessaging
 import Firebase
 import Combine
 
@@ -17,12 +18,14 @@ class UserService : ObservableObject {
     @Published var user: User?
     @Published var requests_sent = [User]()
     @Published var requests_rec = [User]()
+    @Published var friends = [User]()
     
     let db = Firestore.firestore()
     
     
     func getCurrentUser(documentId: String) {
         let docRef = db.collection("users").document(documentId)
+        
         docRef.addSnapshotListener { document, error in
             if let error = error as NSError? {
                print("Error getting document: \(error.localizedDescription)")
@@ -35,9 +38,10 @@ class UserService : ObservableObject {
                     let name = data?["name"] as? String ?? ""
                     let email = data?["email"] as? String ?? ""
                     let score = data?["score"] as? Double ?? 0
+                    let pushToken = data?["pushToken"] as? String ?? ""
                     self.user = User(uid: id, displayName: name, email: email)
                     self.user?.score = score
-                    print("Data: \(self.user?.email ?? "email nil")")
+                    self.user?.pushToken = pushToken
                 }
               }
             }
@@ -78,6 +82,52 @@ class UserService : ObservableObject {
                     }
                 }
             }
+        
+        self.getFriends(documentId: documentId)
+            
+    }
+    
+    func getFriends(documentId: String) {
+        let docRef = db.collection("users").document(documentId)
+        docRef.collection("friends").addSnapshotListener { (querySnapshot, err) in
+            if let err = err {
+                    print("Error getting friend requests: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let id = document.documentID
+                        self.db.collection("users").document(id).addSnapshotListener { document, error in
+                            if let error = error as NSError? {
+                               print("Error getting document: \(error.localizedDescription)")
+                            }
+                            else {
+                              if let document = document {
+                                do {
+                                    let id = document.documentID
+                                    let data = document.data()
+                                    let name = data?["name"] as? String ?? ""
+                                    let email = data?["email"] as? String ?? ""
+                                    let score = data?["score"] as? Double ?? 0
+                                    let pushToken = data?["pushToken"] as? String ?? ""
+                                    let tmp = User(uid: id, displayName: name, email: "")
+                                    tmp.email = email
+                                    tmp.score = score
+                                    tmp.pushToken = pushToken
+                                    print("Test: \(email)")
+                                    if let index = self.friends.firstIndex(of: tmp) {
+                                        self.friends[index] = tmp
+                                    } else {
+                                        self.friends.append(tmp)
+                                    }
+                                    
+                                }
+                              }
+                            }
+                    }
+                }
+            }
+        
+        }
+        
     }
     
     func sendFriendRequest(reqUser:User) {
@@ -112,10 +162,22 @@ class UserService : ObservableObject {
         self.requests_rec.remove(at: index!)
         
         // remove the current user from the users sent list
-        db.collection("users").document(reqUser.id).collection("request_rec").document(user?.id ?? "").delete()
+        db.collection("users").document(reqUser.id).collection("request_sent").document(user?.id ?? "").delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
         
         // remove the user from the current users rec list
-        db.collection("users").document(user?.id ?? "").collection("request_sent").document(reqUser.id).delete()
+        db.collection("users").document(user?.id ?? "").collection("request_rec").document(reqUser.id).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
         
         //add user to current users friend list
         db.collection("users").document(user?.id ?? "").collection("friends").document(reqUser.id).setData(

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class User: Codable, Equatable {
+class User: Identifiable, Codable, Equatable {
     static func == (lhs: User, rhs: User) -> Bool {
         return lhs.id == rhs.id
     }
@@ -22,15 +22,11 @@ class User: Codable, Equatable {
     var pushToken: String?
     var profilePic: String?
     var streak: Int?
-    var requests:[User]?
-    var requested:[User]?
 
     init(uid: String, displayName: String?, email: String?) {
         self.id = uid
         self.email = email
         self.displayName = displayName
-        self.requests = [User]()
-        self.requested = [User]()
     }
 
 }

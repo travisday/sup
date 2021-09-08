@@ -22,6 +22,9 @@
 		1F48163726558EDC005C3DB4 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48163626558EDC005C3DB4 /* UIColorExt.swift */; };
 		1F48163C26558F6B005C3DB4 /* CustomModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48163B26558F6B005C3DB4 /* CustomModifier.swift */; };
 		1F48164126559019005C3DB4 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48164026559019005C3DB4 /* SignInViewModel.swift */; };
+		1F5900D726E1482F006E450C /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5900D626E1482F006E450C /* FriendService.swift */; };
+		1F5900D926E14B1F006E450C /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5900D826E14B1F006E450C /* CardViewModel.swift */; };
+		1F65C7E9267AFAEF009828A6 /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65C7E8267AFAEF009828A6 /* PushService.swift */; };
 		1F852E552656F1BC00217D7C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852E542656F1BC00217D7C /* HomeView.swift */; };
 		1F852E5A2656F85300217D7C /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852E592656F85200217D7C /* Drawer.swift */; };
 		1F852E5F2658474100217D7C /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852E5E2658474100217D7C /* AccountView.swift */; };
@@ -33,12 +36,13 @@
 		1F852EB3265EF0F000217D7C /* AddFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852EB2265EF0F000217D7C /* AddFriendsView.swift */; };
 		1F852EB8265EF17900217D7C /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852EB7265EF17900217D7C /* SearchBar.swift */; };
 		1F852EBD265EF9BA00217D7C /* UserSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852EBC265EF9BA00217D7C /* UserSearchService.swift */; };
+		1FA647E526785459003E3A06 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FA647E426785459003E3A06 /* GoogleService-Info.plist */; };
 		1FBAD32F2667330B00C813EC /* AddFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBAD32E2667330B00C813EC /* AddFriendsViewModel.swift */; };
 		1FC8E65F2655A5ED0044DE8D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC8E65E2655A5ED0044DE8D /* SignUpView.swift */; };
 		1FC8E6642655A6200044DE8D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC8E6632655A6200044DE8D /* SignUpViewModel.swift */; };
 		1FCB080626557BFF00B162CD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB080526557BFF00B162CD /* AuthService.swift */; };
 		1FCB080E26557C3000B162CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB080D26557C3000B162CD /* User.swift */; };
-		1FCB08132655865300B162CD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FCB08122655865300B162CD /* GoogleService-Info.plist */; };
+		1FF7EB602673162D00FD7AE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FF7EB5F2673162D00FD7AE7 /* GoogleService-Info.plist */; };
 		232A3E9CBD7AB212D8309987 /* Pods_sup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 497BE6E64411E086D257F7C5 /* Pods_sup.framework */; };
 		7F6A4DF283BE89D3867B0494 /* Pods_supTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD619AB8B4EDE0C538950A1A /* Pods_supTests.framework */; };
 		DEBD1E57B1055BD31A80CADA /* Pods_sup_supUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 807E991082D1A541B5A17993 /* Pods_sup_supUITests.framework */; };
@@ -83,6 +87,9 @@
 		1F48163626558EDC005C3DB4 /* UIColorExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		1F48163B26558F6B005C3DB4 /* CustomModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModifier.swift; sourceTree = "<group>"; };
 		1F48164026559019005C3DB4 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		1F5900D626E1482F006E450C /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
+		1F5900D826E14B1F006E450C /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		1F65C7E8267AFAEF009828A6 /* PushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
 		1F852E542656F1BC00217D7C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1F852E592656F85200217D7C /* Drawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
 		1F852E5E2658474100217D7C /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
@@ -94,12 +101,14 @@
 		1F852EB2265EF0F000217D7C /* AddFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsView.swift; sourceTree = "<group>"; };
 		1F852EB7265EF17900217D7C /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		1F852EBC265EF9BA00217D7C /* UserSearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSearchService.swift; sourceTree = "<group>"; };
+		1FA647E426785459003E3A06 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1FBAD32E2667330B00C813EC /* AddFriendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsViewModel.swift; sourceTree = "<group>"; };
 		1FC8E65E2655A5ED0044DE8D /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		1FC8E6632655A6200044DE8D /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		1FCB080526557BFF00B162CD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		1FCB080D26557C3000B162CD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		1FCB08122655865300B162CD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1FDBB0A726706D4200E99111 /* sup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = sup.entitlements; sourceTree = "<group>"; };
+		1FF7EB5F2673162D00FD7AE7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = "GoogleService-Info.plist"; path = "sup/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		497BE6E64411E086D257F7C5 /* Pods_sup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		56766FF83E0A9C3D5B9CF84D /* Pods-supTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-supTests.debug.xcconfig"; path = "Target Support Files/Pods-supTests/Pods-supTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7C48432675A1E70EF5C95FB1 /* Pods-supTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-supTests.release.xcconfig"; path = "Target Support Files/Pods-supTests/Pods-supTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -156,7 +165,6 @@
 			isa = PBXGroup;
 			children = (
 				1F24CB202655730F003ACD76 /* sup */,
-				1FCB08122655865300B162CD /* GoogleService-Info.plist */,
 				1F24CB3226557311003ACD76 /* supTests */,
 				1F24CB3D26557311003ACD76 /* supUITests */,
 				1F24CB1F2655730F003ACD76 /* Products */,
@@ -178,6 +186,7 @@
 		1F24CB202655730F003ACD76 /* sup */ = {
 			isa = PBXGroup;
 			children = (
+				1FDBB0A726706D4200E99111 /* sup.entitlements */,
 				1F48163026558EAF005C3DB4 /* Configuration */,
 				1F48161A26558DB8005C3DB4 /* Components */,
 				1FCB080426557BA400B162CD /* Models */,
@@ -187,6 +196,7 @@
 				1F24CB212655730F003ACD76 /* SupApp.swift */,
 				1F24CB2526557311003ACD76 /* Assets.xcassets */,
 				1F24CB2A26557311003ACD76 /* Info.plist */,
+				1FA647E426785459003E3A06 /* GoogleService-Info.plist */,
 				1F24CB2726557311003ACD76 /* Preview Content */,
 			);
 			path = sup;
@@ -195,6 +205,7 @@
 		1F24CB2726557311003ACD76 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
+				1FF7EB5F2673162D00FD7AE7 /* GoogleService-Info.plist */,
 				1F24CB2826557311003ACD76 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -246,6 +257,8 @@
 				1FCB080526557BFF00B162CD /* AuthService.swift */,
 				1F852E6D265D9DBC00217D7C /* UserService.swift */,
 				1F852EBC265EF9BA00217D7C /* UserSearchService.swift */,
+				1F65C7E8267AFAEF009828A6 /* PushService.swift */,
+				1F5900D626E1482F006E450C /* FriendService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -274,6 +287,7 @@
 				1FC8E6632655A6200044DE8D /* SignUpViewModel.swift */,
 				1F852E8C265DAD0C00217D7C /* HomeViewModel.swift */,
 				1FBAD32E2667330B00C813EC /* AddFriendsViewModel.swift */,
+				1F5900D826E14B1F006E450C /* CardViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -406,7 +420,8 @@
 			files = (
 				1F24CB2926557311003ACD76 /* Preview Assets.xcassets in Resources */,
 				1F24CB2626557311003ACD76 /* Assets.xcassets in Resources */,
-				1FCB08132655865300B162CD /* GoogleService-Info.plist in Resources */,
+				1FF7EB602673162D00FD7AE7 /* GoogleService-Info.plist in Resources */,
+				1FA647E526785459003E3A06 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +554,7 @@
 				1F48162C26558DFD005C3DB4 /* RemoteImage.swift in Sources */,
 				1FCB080626557BFF00B162CD /* AuthService.swift in Sources */,
 				1FCB080E26557C3000B162CD /* User.swift in Sources */,
+				1F65C7E9267AFAEF009828A6 /* PushService.swift in Sources */,
 				1F48164126559019005C3DB4 /* SignInViewModel.swift in Sources */,
 				1F48161626558D91005C3DB4 /* AuthView.swift in Sources */,
 				1F852EB8265EF17900217D7C /* SearchBar.swift in Sources */,
@@ -547,6 +563,7 @@
 				1F48163C26558F6B005C3DB4 /* CustomModifier.swift in Sources */,
 				1FC8E6642655A6200044DE8D /* SignUpViewModel.swift in Sources */,
 				1F24CB242655730F003ACD76 /* ContentView.swift in Sources */,
+				1F5900D926E14B1F006E450C /* CardViewModel.swift in Sources */,
 				1F48162726558DEF005C3DB4 /* CustomTextField.swift in Sources */,
 				1F48162226558DE8005C3DB4 /* CustomButton.swift in Sources */,
 				1FC8E65F2655A5ED0044DE8D /* SignUpView.swift in Sources */,
@@ -556,6 +573,7 @@
 				1F48163726558EDC005C3DB4 /* UIColorExt.swift in Sources */,
 				1F852E552656F1BC00217D7C /* HomeView.swift in Sources */,
 				1F852EAE265ECDA300217D7C /* CardView.swift in Sources */,
+				1F5900D726E1482F006E450C /* FriendService.swift in Sources */,
 				1F24CB222655730F003ACD76 /* SupApp.swift in Sources */,
 				1F48160E265589A3005C3DB4 /* SignInView.swift in Sources */,
 				1F852E5A2656F85300217D7C /* Drawer.swift in Sources */,
@@ -718,6 +736,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = sup/sup.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"sup/Preview Content\"";
 				DEVELOPMENT_TEAM = 63M822DAGK;
@@ -741,6 +760,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = sup/sup.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"sup/Preview Content\"";
 				DEVELOPMENT_TEAM = 63M822DAGK;

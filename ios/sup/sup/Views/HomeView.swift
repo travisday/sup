@@ -9,14 +9,14 @@ import SwiftUI
 import FirebaseAuth
 
 struct HomeView: View {
-    @ObservedObject private var viewModel: HomeViewModel
+    @ObservedObject var friendListViewModel: HomeViewModel
     @EnvironmentObject var userService: UserService
 
     @State var showMenu: Bool = false
     @State var showActivity: Bool = false
 
     init() {
-        self.viewModel = HomeViewModel()
+        self.friendListViewModel = HomeViewModel()
     }
 
 
@@ -79,18 +79,18 @@ struct HomeView: View {
 }
 
 struct MainView: View {
-
     @Binding var showMenu: Bool
     @EnvironmentObject var userService: UserService
 
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                    CardView().padding()
-                }
+        Text("\(userService.user?.score ?? 0)")
+        ScrollView{
+            ForEach(userService.friends, id:\.id) { user in
+                CardView(user:user)
             }
+            Spacer()
         }
+
     }
 }
 
