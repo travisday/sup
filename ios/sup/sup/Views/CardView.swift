@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CardView: View {
-    @State var user: User
+    @ObservedObject var user: User
     @EnvironmentObject var userService: UserService
     let pushService = PushService()
     
@@ -24,23 +24,16 @@ struct CardView: View {
                 Text(user.displayName ?? "")
                    .font(.system(size: 26, weight: .bold, design: .default))
                 .foregroundColor(Color(UIConfiguration.subtitleColor))
-                Text("\(user.score ?? 0)")
+                Text("\(String(format: "%.1f", user.score ?? 0))")
                    .font(.system(size: 16, weight: .bold, design: .default))
                    .foregroundColor(Color(UIConfiguration.subtitleColor))
-                HStack {
-                    Text("score")
-                        .font(.system(size: 16, weight: .bold, design: .default))
-                        .foregroundColor(Color(UIConfiguration.subtitleColor))
-                        .padding(.top, 8)
-               }
             }.padding(.trailing, 20)
         Button(action: {
             pushService.sendPush(userTo: user, userFrom: userService.user!)
 
         }, label: {
             Image(systemName: "hands.sparkles.fill").font(.system(size: 56.0)).foregroundColor(Color(UIConfiguration.buttonColor))
-        })
-
+        }).frame(maxWidth: .infinity)
            Spacer()
        }
        .frame(maxWidth: .infinity, alignment: .center)
@@ -54,7 +47,7 @@ struct CardModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .cornerRadius(20)
-            .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 0)
+            .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 0)
    }
 
 }

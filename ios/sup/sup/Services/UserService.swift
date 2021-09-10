@@ -38,9 +38,11 @@ class UserService : ObservableObject {
                     let name = data?["name"] as? String ?? ""
                     let email = data?["email"] as? String ?? ""
                     let score = data?["score"] as? Double ?? 0
+                    let sendCount = data?["sendCount"] as? Int ?? 0
                     let pushToken = data?["pushToken"] as? String ?? ""
                     self.user = User(uid: id, displayName: name, email: email)
                     self.user?.score = score
+                    self.user?.sendCount = sendCount
                     self.user?.pushToken = pushToken
                 }
               }
@@ -107,12 +109,13 @@ class UserService : ObservableObject {
                                     let name = data?["name"] as? String ?? ""
                                     let email = data?["email"] as? String ?? ""
                                     let score = data?["score"] as? Double ?? 0
+                                    let sendCount = data?["sendCount"] as? Int ?? 0
                                     let pushToken = data?["pushToken"] as? String ?? ""
                                     let tmp = User(uid: id, displayName: name, email: "")
                                     tmp.email = email
+                                    tmp.sendCount = sendCount
                                     tmp.score = score
                                     tmp.pushToken = pushToken
-                                    print("Test: \(email)")
                                     if let index = self.friends.firstIndex(of: tmp) {
                                         self.friends[index] = tmp
                                     } else {

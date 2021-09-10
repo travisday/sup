@@ -9,16 +9,10 @@ import SwiftUI
 import FirebaseAuth
 
 struct HomeView: View {
-    @ObservedObject var friendListViewModel: HomeViewModel
     @EnvironmentObject var userService: UserService
 
     @State var showMenu: Bool = false
     @State var showActivity: Bool = false
-
-    init() {
-        self.friendListViewModel = HomeViewModel()
-    }
-
 
     var body: some View {
         let drag = DragGesture()
@@ -81,14 +75,33 @@ struct HomeView: View {
 struct MainView: View {
     @Binding var showMenu: Bool
     @EnvironmentObject var userService: UserService
+    
 
     var body: some View {
-        Text("\(userService.user?.score ?? 0)")
-        ScrollView{
-            ForEach(userService.friends, id:\.id) { user in
-                CardView(user:user)
+        VStack {
+            
+            HStack {
+                HStack {
+                    Image(systemName: "star.fill").font(.system(size: 24.0)).foregroundColor(Color(UIConfiguration.buttonColor))
+                    Text("\(String(format: "%.1f", userService.user?.score ?? 0))").font(.system(size: 24, weight: .bold, design: .default))
+                        .foregroundColor(Color(UIConfiguration.subtitleColor))
+                        
+                    
+                }.frame(maxWidth: .infinity)
+                HStack {
+                    Image(systemName: "hands.sparkles.fill").font(.system(size: 24.0)).foregroundColor(Color(UIConfiguration.buttonColor))
+                    Text("\(userService.user?.sendCount ?? 0)").font(.system(size: 24, weight: .bold, design: .default))
+                        .foregroundColor(Color(UIConfiguration.subtitleColor))
+                        
+                }.frame(maxWidth: .infinity)
+            }.padding(.top, 14)
+            
+            ScrollView{
+                ForEach(userService.friends, id:\.id) { user in
+                    CardView(user:user)
+                }
+                Spacer()
             }
-            Spacer()
         }
 
     }

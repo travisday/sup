@@ -22,8 +22,6 @@
 		1F48163726558EDC005C3DB4 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48163626558EDC005C3DB4 /* UIColorExt.swift */; };
 		1F48163C26558F6B005C3DB4 /* CustomModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48163B26558F6B005C3DB4 /* CustomModifier.swift */; };
 		1F48164126559019005C3DB4 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48164026559019005C3DB4 /* SignInViewModel.swift */; };
-		1F5900D726E1482F006E450C /* FriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5900D626E1482F006E450C /* FriendService.swift */; };
-		1F5900D926E14B1F006E450C /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5900D826E14B1F006E450C /* CardViewModel.swift */; };
 		1F65C7E9267AFAEF009828A6 /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F65C7E8267AFAEF009828A6 /* PushService.swift */; };
 		1F852E552656F1BC00217D7C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852E542656F1BC00217D7C /* HomeView.swift */; };
 		1F852E5A2656F85300217D7C /* Drawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852E592656F85200217D7C /* Drawer.swift */; };
@@ -31,7 +29,6 @@
 		1F852E642658490600217D7C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852E632658490600217D7C /* SettingsView.swift */; };
 		1F852E6926584F3E00217D7C /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852E6826584F3E00217D7C /* ActivityView.swift */; };
 		1F852E6E265D9DBC00217D7C /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852E6D265D9DBC00217D7C /* UserService.swift */; };
-		1F852E8D265DAD0C00217D7C /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852E8C265DAD0C00217D7C /* HomeViewModel.swift */; };
 		1F852EAE265ECDA300217D7C /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852EAD265ECDA300217D7C /* CardView.swift */; };
 		1F852EB3265EF0F000217D7C /* AddFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852EB2265EF0F000217D7C /* AddFriendsView.swift */; };
 		1F852EB8265EF17900217D7C /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852EB7265EF17900217D7C /* SearchBar.swift */; };
@@ -87,8 +84,6 @@
 		1F48163626558EDC005C3DB4 /* UIColorExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
 		1F48163B26558F6B005C3DB4 /* CustomModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModifier.swift; sourceTree = "<group>"; };
 		1F48164026559019005C3DB4 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
-		1F5900D626E1482F006E450C /* FriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendService.swift; sourceTree = "<group>"; };
-		1F5900D826E14B1F006E450C /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		1F65C7E8267AFAEF009828A6 /* PushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
 		1F852E542656F1BC00217D7C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		1F852E592656F85200217D7C /* Drawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drawer.swift; sourceTree = "<group>"; };
@@ -96,7 +91,6 @@
 		1F852E632658490600217D7C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1F852E6826584F3E00217D7C /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		1F852E6D265D9DBC00217D7C /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
-		1F852E8C265DAD0C00217D7C /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		1F852EAD265ECDA300217D7C /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1F852EB2265EF0F000217D7C /* AddFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsView.swift; sourceTree = "<group>"; };
 		1F852EB7265EF17900217D7C /* SearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
@@ -258,7 +252,6 @@
 				1F852E6D265D9DBC00217D7C /* UserService.swift */,
 				1F852EBC265EF9BA00217D7C /* UserSearchService.swift */,
 				1F65C7E8267AFAEF009828A6 /* PushService.swift */,
-				1F5900D626E1482F006E450C /* FriendService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -285,9 +278,7 @@
 			children = (
 				1F48164026559019005C3DB4 /* SignInViewModel.swift */,
 				1FC8E6632655A6200044DE8D /* SignUpViewModel.swift */,
-				1F852E8C265DAD0C00217D7C /* HomeViewModel.swift */,
 				1FBAD32E2667330B00C813EC /* AddFriendsViewModel.swift */,
-				1F5900D826E14B1F006E450C /* CardViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -550,7 +541,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F48163226558ED6005C3DB4 /* UIConfiguration.swift in Sources */,
-				1F852E8D265DAD0C00217D7C /* HomeViewModel.swift in Sources */,
 				1F48162C26558DFD005C3DB4 /* RemoteImage.swift in Sources */,
 				1FCB080626557BFF00B162CD /* AuthService.swift in Sources */,
 				1FCB080E26557C3000B162CD /* User.swift in Sources */,
@@ -563,7 +553,6 @@
 				1F48163C26558F6B005C3DB4 /* CustomModifier.swift in Sources */,
 				1FC8E6642655A6200044DE8D /* SignUpViewModel.swift in Sources */,
 				1F24CB242655730F003ACD76 /* ContentView.swift in Sources */,
-				1F5900D926E14B1F006E450C /* CardViewModel.swift in Sources */,
 				1F48162726558DEF005C3DB4 /* CustomTextField.swift in Sources */,
 				1F48162226558DE8005C3DB4 /* CustomButton.swift in Sources */,
 				1FC8E65F2655A5ED0044DE8D /* SignUpView.swift in Sources */,
@@ -573,7 +562,6 @@
 				1F48163726558EDC005C3DB4 /* UIColorExt.swift in Sources */,
 				1F852E552656F1BC00217D7C /* HomeView.swift in Sources */,
 				1F852EAE265ECDA300217D7C /* CardView.swift in Sources */,
-				1F5900D726E1482F006E450C /* FriendService.swift in Sources */,
 				1F24CB222655730F003ACD76 /* SupApp.swift in Sources */,
 				1F48160E265589A3005C3DB4 /* SignInView.swift in Sources */,
 				1F852E5A2656F85300217D7C /* Drawer.swift in Sources */,

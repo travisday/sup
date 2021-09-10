@@ -16,7 +16,7 @@ class UserSearchService {
     
     let db = Firestore.firestore()
     
-    static func searchUsers(input: String, onSuccess: @escaping (_ user: [User]) -> Void) {
+    static func searchUsers(input: String, friends: [User], onSuccess: @escaping (_ user: [User]) -> Void) {
         
         Firestore.firestore().collection("users")
             .whereField("name", isGreaterThanOrEqualTo: input)
@@ -37,7 +37,7 @@ class UserSearchService {
                 let user = User(uid: id, displayName: name, email: email)
                 user.score = score
                 
-                if (user.id != Auth.auth().currentUser!.uid) {
+                if (user.id != Auth.auth().currentUser!.uid && (!friends.contains(user)) ) {
                     users.append(user)
                 }
                 

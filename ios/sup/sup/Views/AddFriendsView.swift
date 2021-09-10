@@ -21,7 +21,7 @@ struct AddFriendsView: View {
     
     func searchUsers () {
         isLoading = true
-        UserSearchService.searchUsers(input: value) { (users) in
+        UserSearchService.searchUsers(input: value, friends: userService.friends) { (users) in
             self.isLoading = false
             self.users = users
         }
