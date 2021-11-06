@@ -1,76 +1,104 @@
-import { setScore } from './db/setScore';
-import { admin, functions } from './services';
-
-// const mods = [0.1, 0.12, 0.14, 0.16, 0.18, 0.2, 0.22];
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
+admin.initializeApp();
 
 export const sendMessage = functions.https.onCall(
-  async ({ idTo, idFrom }: { idTo?: string; idFrom: string }) => {
-    // console.log('----------------start function--------------------');
-    console.log(idTo, idFrom);
-    if (!idTo || !idFrom)
-      return console.log(`parameters not supplied, to: ${idTo} from ${idFrom}`);
-    // Get push token user to (receive)
-    const userToSnap = await admin
-      .firestore()
-      .collection('users')
-      .doc(idTo)
-      .get();
+    async ({idTo, idFrom}: {idTo?: string; idFrom: string}) => {
+      // console.log('----------------start function--------------------');
+      console.log(idTo, idFrom);
+      if (!idTo || !idFrom)
+        return console.log("parameters not supplied, to: ${idTo} from ${idFrom}");
+      // Get push token user to (receive)
+      const userToSnap = await admin
+        .firestore()
+        .collection('users')
+        .doc(idTo)
+        .get();
+  
+      const userTo = userToSnap.data();
+      if (!userTo) return console.log("user ${idTo} does not exist");
+      console.log(`Found user to: ${userTo.name}`);
+      if (!userTo.pushToken) {
+        console.log('no pushToken for target user');
+        return;
+      }
+      // Get info user from (sent)
+  
+      const userFromSnap = await admin
+        .firestore()
+        .collection('users')
+        .doc(idFrom)
+        .get();
+  
+      const userFrom = userFromSnap.data();
+      if (!userFrom) return console.log(`user ${idFrom} does not exist`);
+      console.log(`Found user from: ${userFrom.name}`);
+  
+      const payload: admin.messaging.MessagingPayload = {
+        notification: {
+          from: idFrom,
+          name: userFrom.username,
+          title: `${userFrom.username}: sup`,
+          badge: '1',
+          sound: 'default',
+        },
+      };
+      // Let push to the target device
 
-    const userTo = userToSnap.data();
-    if (!userTo) return console.log(`user ${idTo} does not exist`);
-    console.log(`Found user to: ${userTo.name}`);
-    if (!userTo.pushToken) {
-      console.log('no pushToken for target user');
-      return;
+      admin.messaging().sendToDevice(userTo.pushToken, payload)
+      
+      return null;
     }
-    // Get info user from (sent)
+  );
 
-    const userFromSnap = await admin
-      .firestore()
-      .collection('users')
-      .doc(idFrom)
-      .get();
+export const sendFollowRequest = functions.https.onCall(
+    async ({idTo, idFrom}: {idTo?: string; idFrom: string}) => {
+      // console.log('----------------start function--------------------');
+      console.log(idTo, idFrom);
+      if (!idTo || !idFrom)
+        return console.log("parameters not supplied, to: ${idTo} from ${idFrom}");
+      // Get push token user to (receive)
+      const userToSnap = await admin
+        .firestore()
+        .collection('users')
+        .doc(idTo)
+        .get();
+  
+      const userTo = userToSnap.data();
+      if (!userTo) return console.log("user ${idTo} does not exist");
+      console.log(`Found user to: ${userTo.name}`);
+      if (!userTo.pushToken) {
+        console.log('no pushToken for target user');
+        return;
+      }
+      // Get info user from (sent)
+  
+      const userFromSnap = await admin
+        .firestore()
+        .collection('users')
+        .doc(idFrom)
+        .get();
+  
+      const userFrom = userFromSnap.data();
+      if (!userFrom) return console.log(`user ${idFrom} does not exist`);
+      console.log(`Found user from: ${userFrom.name}`);
+  
+      const payload: admin.messaging.MessagingPayload = {
+        notification: {
+          from: idFrom,
+          name: userFrom.username,
+          title: `${userFrom.username} would like to be friends!`,
+          badge: '1',
+          sound: 'default',
+        },
+      };
+      // Let push to the target device
 
-    const userFrom = userFromSnap.data();
-    if (!userFrom) return console.log(`user ${idFrom} does not exist`);
-    console.log(`Found user from: ${userFrom.name}`);
-
-    const payload: admin.messaging.MessagingPayload = {
-      notification: {
-        from: idFrom,
-        name: userFrom.name,
-        title: `${userFrom.name}: sup`,
-        badge: '1',
-        sound: 'default',
-      },
-    };
-
-    var rec = admin
-      .firestore()
-      .collection('users')
-      .doc(idTo);
-    var sender = admin
-      .firestore()
-      .collection('users')
-      .doc(idFrom);
-    // Let push to the target device
-
-    const p1 = addRecScore(rec);
-    const p2 = decSenderCount(sender);
-    const p3 = addSenderScore(sender);
-
-    await Promise.all([p1, p2, p3]).catch(error => {
-      console.log('Error sending message:', error);
-    });
-    admin
-      .messaging()
-      .sendToDevice(userTo.pushToken, payload)
-      .then(response => {
-        console.log('Successfully sent message:', response);
-      });
-    return null;
-  }
-);
+      admin.messaging().sendToDevice(userTo.pushToken, payload)
+      
+      return null;
+    }
+  );
 
 export const regenerateSups = functions.pubsub
   .schedule('every 24 hours')
@@ -92,48 +120,71 @@ export const regenerateSups = functions.pubsub
       });
 
     return null;
-  });
+});
 
-const addRecScore = async (rec: FirebaseFirestore.DocumentReference) => {
-  try {
-    return setScore(rec, current => {
-      if (current < 10) return current + 1;
-      return current + 0.3;
-    });
-  } catch (e) {
-    console.error(`error adding receiver score`);
-    console.error(e);
-    return null;
-  }
-};
+export const alertFriendSched = functions.pubsub
+  .schedule('every 24 hours')
+  .onRun(async () => {
+    console.log("---ALERT FRIEND STARTED---");
+    admin.firestore().collection('users').get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(async function(doc) {
+          const user = doc.data()
 
-const addSenderScore = async (sender: FirebaseFirestore.DocumentReference) => {
-  try {
-    return setScore(sender, current => {
-      if (current < 10) return current + 1;
-      return current + 0.1;
-    });
-  } catch (e) {
-    console.error(`error adding sender score`);
-    console.error(e);
-    return null;
-  }
-};
+          let twoweeksago = new Date();
+          twoweeksago.setDate(twoweeksago.getDate() - 14)
 
-function decSenderCount(
-  sender: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-) {
-  admin.firestore().runTransaction(async transaction => {
-    const doc = await transaction.get(sender);
-    if (!doc.exists) {
-      throw 'Document does not exist';
-    }
-    const newCount = doc?.data()?.sendCount - 1;
-    if (!(newCount < 0)) {
-      transaction.update(sender, {
-        sendCount: newCount,
+          let threedaysago = new Date();
+          threedaysago.setDate(threedaysago.getDate() - 3)
+          
+          const twoWeekActivity  = await admin.firestore().collection('users').doc(doc.id)
+                                       .collection('activity').where('date', '>', twoweeksago).get();
+
+          const threeDayActivity  = await admin.firestore().collection('users').doc(doc.id)
+                                       .collection('activity').where('date', '>', threedaysago).get();
+
+          
+          let twoWeekAvg = twoWeekActivity.size / 14;
+          let threeDayAvg = threeDayActivity.size / 3;
+          
+          if ( threeDayAvg < (.5 * twoWeekAvg)) {
+          //if ( true ) {
+            const friends  = await admin.firestore().collection('users').doc(doc.id)
+                                       .collection('friends').limit(1).get();
+          
+            const friendID = friends.docs[0].id;
+
+            const friend = await admin.firestore().collection('users').doc(friendID).get();
+            
+            console.log(friend?.data()?.username);
+            console.log("2WA: "+twoWeekAvg);
+            console.log("3DA: "+threeDayAvg);
+            console.log(friend?.data()?.pushToken);
+            
+          
+            //alert friend
+            const payload: admin.messaging.MessagingPayload = {
+              notification: {
+                title: `SUP!`,
+                body: `${user.username} hasn't gotten a lot of sups recently. Send them one!`,
+                badge: '1',
+                sound: 'default',
+              },
+            };
+
+            admin.messaging().sendToDevice(friend?.data()?.pushToken, payload);
+            console.log("SENT!");
+          }  
+          
+        });
+      })
+      .then(() => console.log("---ALERT FRIEND ENDED---"))
+      .catch(error => {
+        console.log(error);
+        return null;
       });
-    }
-    console.log('Count updated');
-  });
-}
+    
+    
+    return null;
+});
+
