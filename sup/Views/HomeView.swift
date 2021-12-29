@@ -54,9 +54,18 @@ struct HomeView: View {
                             self.showMenu.toggle()
                         }
                     }) {
-                        Image(systemName: "line.horizontal.3")
-                            .foregroundColor(Color(UIConfiguration.buttonColor))
-                            .imageScale(.large)
+                        if (userService.requests_rec.isEmpty) {
+                            Image(systemName: "line.horizontal.3")
+                                .foregroundColor(Color(UIConfiguration.buttonColor))
+                                .imageScale(.large)
+                        } else {
+                            Image(systemName: "line.horizontal.3")
+                                .foregroundColor(Color(UIConfiguration.buttonColor))
+                                .imageScale(.large)
+                                .overlay(Capsule().fill(Color.red).frame(width: 10, height: 10, alignment: .topTrailing).position(x: 25, y: 0))
+                        }
+                        
+
                     }), trailing: (
                         Button(action: { self.showActivity.toggle()
                     }) {
@@ -79,11 +88,11 @@ struct HomeView: View {
 struct MainView: View {
     @Binding var showMenu: Bool
     @EnvironmentObject var userService: UserService
+    @State var profileText = userService.user?.profileText ?? "Tell your friends what's up..."
     
 
     var body: some View {
         VStack {
-            
             HStack {
                 HStack {
                     Image(systemName: "star.fill").font(.system(size: 24.0)).foregroundColor(Color(UIConfiguration.buttonColor))
@@ -118,9 +127,20 @@ struct MainView: View {
                 }
             }
         }
+//        .onTapGesture {
+//            self.hideKeyboard()
+//        }
 
     }
 }
+
+//#if canImport(UIKit)
+//extension View {
+//    func hideKeyboard() {
+//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+//    }
+//}
+//#endif
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
