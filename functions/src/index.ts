@@ -38,7 +38,7 @@ export const sendMessage = functions.https.onCall(
         notification: {
           from: idFrom,
           name: userFrom.username,
-          title: `${userFrom.username}: sup`,
+          title: `${userFrom.username}: sup!`,
           badge: '1',
           sound: 'default',
         },
