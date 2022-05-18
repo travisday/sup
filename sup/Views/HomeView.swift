@@ -88,26 +88,37 @@ struct HomeView: View {
 struct MainView: View {
     @Binding var showMenu: Bool
     @EnvironmentObject var userService: UserService
-    @State var profileText = userService.user?.profileText ?? "Tell your friends what's up..."
+    //@State var profileText = userService.user?.profileText ?? "Tell your friends what's up..."
     
 
     var body: some View {
-        VStack {
-            HStack {
-                HStack {
-                    Image(systemName: "star.fill").font(.system(size: 24.0)).foregroundColor(Color(UIConfiguration.buttonColor))
-                    Text("\(String(format: "%.1f", userService.user?.score ?? 0))").font(.system(size: 24, weight: .bold, design: .default))
-                        .foregroundColor(Color(UIConfiguration.subtitleColor))
-                        
-                    
-                }.frame(maxWidth: .infinity)
-                HStack {
-                    Image(systemName: "hands.sparkles.fill").font(.system(size: 24.0)).foregroundColor(Color(UIConfiguration.buttonColor))
-                    Text("\(userService.user?.sendCount ?? 0)").font(.system(size: 24, weight: .bold, design: .default))
-                        .foregroundColor(Color(UIConfiguration.subtitleColor))
-                        
-                }.frame(maxWidth: .infinity)
+        VStack(alignment: .leading) {
+            
+            HStack() {
+                
+//                TextEditor(text: $profileText)
+//                    .frame(minWidth: 0, maxWidth: 2250, minHeight: 0, maxHeight: 75)
+//                    .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color(UIConfiguration.buttonColor), lineWidth: 2))
+//                    .padding(.leading, 10)
+//                    .onChange(of: profileText, perform: { value in
+//                        //userService.updateProfileText(text: profileText)
+//                        print(profileText)
+//                    })
+//                Spacer()
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "star.fill").font(.system(size: 20.0)).foregroundColor(Color(UIConfiguration.buttonColor))
+                        Text("\(String(format: "%.1f", userService.user?.score ?? 0))").font(.system(size: 20, weight: .bold, design: .default))
+                            .foregroundColor(Color(UIConfiguration.subtitleColor))
+                    }//.frame(maxWidth: .infinity)
+                    HStack {
+                        Image(systemName: "hands.sparkles.fill").font(.system(size: 20.0)).foregroundColor(Color(UIConfiguration.buttonColor))
+                        Text("\(userService.user?.sendCount ?? 0)").font(.system(size: 20, weight: .bold, design: .default))
+                            .foregroundColor(Color(UIConfiguration.subtitleColor))
+                    }//.frame(maxWidth: .infinity)
+                }.padding(.trailing, 10)
             }.padding(.top, 14)
+            
             
             ScrollView{
                 if (userService.friends.isEmpty) {
@@ -126,21 +137,21 @@ struct MainView: View {
                     Spacer()
                 }
             }
+        }.onTapGesture {
+            self.hideKeyboard()
         }
-//        .onTapGesture {
-//            self.hideKeyboard()
-//        }
 
+        }
+        
+    }
+
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
-
-//#if canImport(UIKit)
-//extension View {
-//    func hideKeyboard() {
-//        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-//    }
-//}
-//#endif
+#endif
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {

@@ -41,7 +41,6 @@
 		1F852EB3265EF0F000217D7C /* AddFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852EB2265EF0F000217D7C /* AddFriendsView.swift */; };
 		1F852EB8265EF17900217D7C /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852EB7265EF17900217D7C /* SearchBar.swift */; };
 		1F852EBD265EF9BA00217D7C /* UserSearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F852EBC265EF9BA00217D7C /* UserSearchService.swift */; };
-		1FA647E526785459003E3A06 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FA647E426785459003E3A06 /* GoogleService-Info.plist */; };
 		1FBAD32F2667330B00C813EC /* AddFriendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBAD32E2667330B00C813EC /* AddFriendsViewModel.swift */; };
 		1FC8E65F2655A5ED0044DE8D /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC8E65E2655A5ED0044DE8D /* SignUpView.swift */; };
 		1FC8E6642655A6200044DE8D /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC8E6632655A6200044DE8D /* SignUpViewModel.swift */; };
@@ -407,7 +406,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					1F24CB1D2655730F003ACD76 = {
 						CreatedOnToolsVersion = 12.2;
@@ -450,7 +449,6 @@
 				1F24CB2926557311003ACD76 /* Preview Assets.xcassets in Resources */,
 				1F24CB2626557311003ACD76 /* Assets.xcassets in Resources */,
 				1FF7EB602673162D00FD7AE7 /* GoogleService-Info.plist in Resources */,
-				1FA647E526785459003E3A06 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -776,7 +774,7 @@
 				CODE_SIGN_ENTITLEMENTS = sup/sup.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"sup/Preview Content\"";
-				DEVELOPMENT_TEAM = 63M822DAGK;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = sup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -801,7 +799,7 @@
 				CODE_SIGN_ENTITLEMENTS = sup/sup.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"sup/Preview Content\"";
-				DEVELOPMENT_TEAM = 63M822DAGK;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = sup/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
