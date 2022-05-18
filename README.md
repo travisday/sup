@@ -18,7 +18,7 @@ and you get points by sending sups.
 - Accept Friend Request
 
 ### Screenshots
-![](images/home.png)
-![](images/activity.png)
-![](images/profile.png)
-![](images/search_friends.png)
+![](images/home.PNG)
+![](images/activity.PNG)
+![](images/profile.PNG)
+![](images/search_friends.PNG)
