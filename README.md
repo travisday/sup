@@ -16,3 +16,9 @@ and you get points by sending sups.
 - Search Users
 - Request Friend
 - Accept Friend Request
+
+### Screenshots
+![](screenshots/home.PNG)
+![](screenshots/activity.PNG)
+![](screenshots/profile.PNG)
+![](screenshots/search_friends.PNG)
